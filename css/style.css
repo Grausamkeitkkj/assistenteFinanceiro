@@ -130,7 +130,7 @@ table {
 
 .grid {
     display: grid;
-    grid-template-columns: 250px 250px;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
@@ -199,7 +199,17 @@ table {
 }
 
 .content {
-    background-color: #f4f4f4;
-    padding: 0 40px 40px 40px
-        /* Topo | Direita | Baixo | Esquerda */
+    border-radius: 4px;
+    background-color: #ebebeb;
+    padding: 40px;
+    /* Topo | Direita | Baixo | Esquerda */
+    margin: 20px;
+}
+
+@media (max-width:600px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
