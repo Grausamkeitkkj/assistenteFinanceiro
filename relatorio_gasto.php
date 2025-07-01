@@ -8,7 +8,7 @@
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
 
-    $gastoArray = Gasto::getGasto($pdo);
+    $gastoArray = GastoPesquisa::getGasto($pdo);
 
     $GastoporMes = GastoPesquisa::getGastoAgrupadoPorMesAno($pdo);
     $labels = array_column($GastoporMes, 'mes_ano_label');

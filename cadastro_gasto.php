@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-group">
                             <label class="label-registration" for="parcelas_pagas">Parcelas Pagas:</label>
-                            <input class="input-registration" id="parcelas_pagas" name="parcelas_pagas" type="number" min="0" value="0">
+                            <input class="input-registration" id="parcelas_pagas" name="parcelas_pagas" type="number" min="0" value="1">
                         </div>
                         <div class="form-group">
                             <label class="label-registration" for="total_parcelas">Total Parcelas:</label>

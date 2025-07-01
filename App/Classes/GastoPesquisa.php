@@ -2,43 +2,14 @@
 namespace App\Classes;
 
 use PDO;
+use App\Classes\Gasto;
 
 class GastoPesquisa {
-    private $id_gasto;
-    private $produto;
-    private $categoria_id;
-    private $nome_categoria; //vem da outra tabela
-    private $valor;
-    private $vencimento;
-    private $forma_pagamento_id;
-    private $nome_forma_pagamento;//vem da outra tabela
-    private $parcelas_pagas;
-    private $total_parcelas;
-    private $data_pagamento;
+    private PDO $pdo;
 
-    public function __construct($id_gasto, $produto, $categoria_id, $nome_categoria, $valor, $vencimento, $forma_pagamento_id, $nome_forma_pagamento, $parcelas_pagas, $total_parcelas, $data_pagamento) {
-        $this->id_gasto = $id_gasto;
-        $this->produto = $produto;
-        $this->categoria_id = $categoria_id;
-        $this->nome_categoria = $nome_categoria;
-        $this->valor = $valor;
-        $this->vencimento = $vencimento;
-        $this->forma_pagamento_id = $forma_pagamento_id;
-        $this->nome_forma_pagamento = $nome_forma_pagamento;
-        $this->parcelas_pagas = $parcelas_pagas;
-        $this->total_parcelas = $total_parcelas;
-        $this->data_pagamento = $data_pagamento;
+    public function __construct(PDO $pdo) {
+        $this->pdo = $pdo;
     }
-
-    public function getProduto() { return $this->produto; }
-    public function getNomeCategoria() { return $this->nome_categoria; }
-    public function getValor() { return $this->valor; }
-    public function getVencimento() { return $this->vencimento; }
-    public function getNomeFormaPagamento() { return $this->nome_forma_pagamento; }
-    public function getParcelasPagas() { return $this->parcelas_pagas; }
-    public function getTotalParcelas() { return $this->total_parcelas; }
-    public function getDataPagamento() { return $this->data_pagamento; }
-
 
     public static function getGasto(PDO $pdo) { //passando um objeto do tipo PDO, dizendo a conexao
         $sql = "SELECT 
@@ -73,24 +44,25 @@ class GastoPesquisa {
         return $gastos;
     }
 
-    public function insertGasto(PDO $pdo){
-        $sql = "INSERT INTO gasto 
-           (produto, categoria_id, valor, vencimento, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento)
-           VALUES 
-           (:produto, :categoria_id, :valor, :vencimento, :forma_pagamento_id, :parcelas_pagas, :total_parcelas, :data_pagamento)";
+    public function insertGasto(Gasto $gasto) {
+       $sql = "INSERT INTO gasto 
+          (produto, categoria_id, valor, vencimento, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento)
+          VALUES 
+          (:produto, :categoria_id, :valor, :vencimento, :forma_pagamento_id, :parcelas_pagas, :total_parcelas, :data_pagamento)";
     
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':produto', $this->produto);
-        $stmt->bindParam(':categoria_id', $this->categoria_id, PDO::PARAM_INT);
-        $stmt->bindParam(':valor', $this->valor);
-        $stmt->bindParam(':vencimento', $this->vencimento);
-        $stmt->bindParam(':forma_pagamento_id', $this->forma_pagamento_id, PDO::PARAM_INT);
-        $stmt->bindParam(':parcelas_pagas', $this->parcelas_pagas, PDO::PARAM_INT);
-        $stmt->bindParam(':total_parcelas', $this->total_parcelas, PDO::PARAM_INT);
-        $stmt->bindParam(':data_pagamento', $this->data_pagamento);
-
-        return $stmt->execute();
+       $stmt = $this->pdo->prepare($sql);
+       $stmt->bindValue(':produto', $gasto->getProduto());
+       $stmt->bindValue(':categoria_id', $gasto->getCategoriaId(), PDO::PARAM_INT);
+       $stmt->bindValue(':valor', $gasto->getValor());
+       $stmt->bindValue(':vencimento', $gasto->getVencimento());
+       $stmt->bindValue(':forma_pagamento_id', $gasto->getFormaPagamentoId(), PDO::PARAM_INT);
+       $stmt->bindValue(':parcelas_pagas', $gasto->getParcelasPagas(), PDO::PARAM_INT);
+       $stmt->bindValue(':total_parcelas', $gasto->getTotalParcelas(), PDO::PARAM_INT);
+       $stmt->bindValue(':data_pagamento', $gasto->getDataPagamento());
+        
+       return $stmt->execute();
     }
+    
 
     public static function getGastoAgrupadoPorMesAno(PDO $pdo){
         $sql = "SELECT 

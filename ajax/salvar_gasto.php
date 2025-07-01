@@ -3,6 +3,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Classes\Conexao;
 use App\Classes\Gasto;
+use App\Classes\GastoPesquisa;
+
+$conexao = new Conexao();
+$pdo = $conexao->getPdo();
+$gastoPesquisa = new GastoPesquisa($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {// '??' verifica se a variavel existe e nao e nula. Funciona da mesma forma do isset(). O valor a direita do ?? e o valor padrao
     $produto = ($_POST['produto'] ?? '') !== '' ? $_POST['produto'] : null;
@@ -20,13 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {// '??' verifica se a variavel exist
     }
 
     $valor = str_replace(['.', ','], ['', '.'], $valor);
-    $conexao = new Conexao();
-    $pdo = $conexao->getPdo();
 
     $gasto = new Gasto(null, $produto, $categoria_id, null, $valor, $vencimento, $forma_pagamento_id, null, $parcelas_pagas, $total_parcelas, $data_pagamento);
 
     try {
-        if ($gasto->insertGasto($pdo)) {
+        if ($gastoPesquisa->insertGasto($gasto)) {
             echo json_encode(['success' => true, 'message' => 'Gasto cadastrado com sucesso!']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Erro ao salvar gasto']);
