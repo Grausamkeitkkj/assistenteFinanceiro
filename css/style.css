@@ -1,0 +1,205 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    border: 0;
+    background: #f7f7f7;
+    display: flex;
+    /* Define o container como flexbox, habilitando layout flexível */
+    flex-direction: column;
+    /* Organiza os itens filhos em coluna (de cima para baixo) */
+    align-items: center;
+    /* Alinha os itens filhos horizontalmente ao centro do container */
+
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 30px;
+    border-spacing: 0;
+}
+
+.menu {
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.menu a {
+    display: block;
+    background: #6949ca;
+    padding: 15px 30px;
+    border-radius: 4px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.menu .submenu {
+    margin: 0;
+    display: none;
+    position: absolute;
+    top: 100%;
+    flex-direction: column;
+}
+
+.menu .submenu li a {
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+    padding: 10px 20px;
+    color: white;
+    text-transform: uppercase;
+}
+
+.menu .dropdown:hover>a {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.menu .submenu li a:hover {
+    border: 0px;
+    background-color: #4527a0;
+}
+
+.menu .dropdown:hover .submenu {
+    border: 0px;
+    display: flex;
+}
+
+.submenu li:last-child a {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.table th {
+    color: #f7f7f7;
+    padding: 18px 25px;
+    background-color: #6949ca;
+    text-transform: uppercase;
+}
+
+.table th:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.table th:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.table td:nth-child(even) {
+    background-color: #e4e4e4;
+}
+
+.table tr:hover td {
+    background-color: #e4e4e4;
+}
+
+.table td {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #6949ca
+}
+
+.label-registration {
+    text-align: left;
+    padding-bottom: 5px;
+}
+
+.form-registration {
+    max-width: 700px;
+    margin: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 250px 250px;
+    gap: 20px;
+}
+
+.form-group {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-registration {
+    padding: 10px;
+    border: 0.5px solid #6949ca;
+    border-radius: 4px;
+    background-color: transparent;
+    outline: none;
+}
+
+
+.input-checkbox-registration {
+    height: 22px;
+    width: 22px;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.label-registration {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.title-registration {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 15px;
+    background-color: #6949ca;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    /* opcional, só para espaçar */
+}
+
+.content {
+    background-color: #f4f4f4;
+    padding: 0 40px 40px 40px
+        /* Topo | Direita | Baixo | Esquerda */
+}
