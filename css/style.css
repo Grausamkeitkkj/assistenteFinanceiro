@@ -148,6 +148,15 @@ table {
     outline: none;
 }
 
+.input-tabela {
+    margin-left: 5px;
+    padding: 10px;
+    border: 0.5px solid #6949ca;
+    border-radius: 4px;
+    background-color: transparent;
+    outline: none;
+}
+
 
 .input-checkbox-registration {
     height: 22px;
@@ -166,7 +175,14 @@ table {
     color: #444;
     margin-bottom: 4px;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
+}
+
+.label-grafico {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
 }
 
 .title-registration {
