@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <meta charset="UTF-8">
-      <title>Relatório</title>
-      <link rel="stylesheet" href="./css/style.css">
+        <meta charset="UTF-8">
+        <link rel="icon" type="image/png" href="icon/icon.png">
+        <title>Relatório</title>
+        <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
         <header class="header">

@@ -23,6 +23,17 @@ CREATE TABLE IF NOT EXISTS gasto (
     FOREIGN KEY (forma_pagamento_id) REFERENCES forma_pagamento(id_forma_pagamento)
 );
 
+CREATE TABLE IF NOT EXISTS parcela (
+    id_parcela INT PRIMARY KEY AUTO_INCREMENT,
+    gasto_id INT NOT NULL,
+    numero_parcela INT NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    vencimento DATE NOT NULL,
+    data_pagamento DATE DEFAULT NULL,
+    
+    FOREIGN KEY (gasto_id) REFERENCES gasto(id_gasto)
+);
+
 INSERT INTO categoria_gasto (nome_categoria_gasto) VALUES
 ('Moradia'),
 ('Vestimenta'),

@@ -60,7 +60,12 @@ class GastoPesquisa {
        $stmt->bindValue(':total_parcelas', $gasto->getTotalParcelas(), PDO::PARAM_INT);
        $stmt->bindValue(':data_pagamento', $gasto->getDataPagamento());
         
-       return $stmt->execute();
+        if ($stmt->execute()) {
+            return $this->pdo->lastInsertId(); // <-- ISSO É ESSENCIAL
+        } else {
+            return false;
+        }
+
     }
     
 

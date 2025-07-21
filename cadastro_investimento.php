@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" type="image/png" href="icon/icon.png">
         <meta charset="UTF-8">
         <title>Relatório</title>
         <link rel="stylesheet" href="./css/style.css">

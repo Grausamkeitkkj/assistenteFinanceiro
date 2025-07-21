@@ -18,9 +18,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <meta charset="UTF-8">
-      <title>Relatório</title>
-      <link rel="stylesheet" href="./css/style.css">
+        <link rel="icon" type="image/png" href="icon/icon.png">
+        <meta charset="UTF-8">
+        <title>Relatório</title>
+        <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
         <header class="header">
@@ -46,7 +47,7 @@
                 </select>
                 <select class="input-registration" id="ano_inicio_tabela" name="ano_inicio" required>
                     <option value="">Selecione um ano</option>
-                </sele
+                </select>
                 <label class="label-grafico" for="ano_fim">Até:</label>
                 <select class="input-registration" id="mes_fim_tabela" name="mes_fim" required>
                     <option>Escolha o mês</option>
