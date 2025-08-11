@@ -13,5 +13,5 @@
             <li><a href="cadastro_investimento.php">Cadastrar Investimento</a></li>
         </ul> 
     </li>
-    <li><a href="/">Quitação</a></li>
+    <li><a href="#">Quitação</a></li>
 </ul>

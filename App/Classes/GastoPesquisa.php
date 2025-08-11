@@ -19,7 +19,6 @@ class GastoPesquisa {
                 FROM gasto a
                 JOIN categoria_gasto b ON a.categoria_id = b.id_categoria_gasto
                 JOIN forma_pagamento c ON a.forma_pagamento_id = c.id_forma_pagamento
-                ORDER BY a.vencimento DESC;
                 ";
 
         $stmt = $pdo->prepare($sql);
@@ -33,7 +32,6 @@ class GastoPesquisa {
                 $row['categoria_id'],
                 $row['nome_categoria_gasto'],
                 $row['valor'],
-                $row['vencimento'],
                 $row['forma_pagamento_id'],
                 $row['nome_forma_pagamento'],
                 $row['parcelas_pagas'],
@@ -46,15 +44,14 @@ class GastoPesquisa {
 
     public function insertGasto(Gasto $gasto) {
        $sql = "INSERT INTO gasto 
-          (produto, categoria_id, valor, vencimento, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento)
+          (produto, categoria_id, valor, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento)
           VALUES 
-          (:produto, :categoria_id, :valor, :vencimento, :forma_pagamento_id, :parcelas_pagas, :total_parcelas, :data_pagamento)";
+          (:produto, :categoria_id, :valor, :forma_pagamento_id, :parcelas_pagas, :total_parcelas, :data_pagamento)";
     
        $stmt = $this->pdo->prepare($sql);
        $stmt->bindValue(':produto', $gasto->getProduto());
        $stmt->bindValue(':categoria_id', $gasto->getCategoriaId(), PDO::PARAM_INT);
        $stmt->bindValue(':valor', $gasto->getValor());
-       $stmt->bindValue(':vencimento', $gasto->getVencimento());
        $stmt->bindValue(':forma_pagamento_id', $gasto->getFormaPagamentoId(), PDO::PARAM_INT);
        $stmt->bindValue(':parcelas_pagas', $gasto->getParcelasPagas(), PDO::PARAM_INT);
        $stmt->bindValue(':total_parcelas', $gasto->getTotalParcelas(), PDO::PARAM_INT);

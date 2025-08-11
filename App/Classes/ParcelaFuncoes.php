@@ -5,13 +5,13 @@ use App\Classes\Parcela;
 use PDO;
 
 class ParcelaFuncoes{
-    public static function gerarParcelas($gastoId, $valorTotal, $totalParcelas, $dataVencimentoInicial) {
+    public static function gerarParcelas($gastoId, $valorTotal, $totalParcelas, $data_pagamento) {
         $parcelas = [];
+        $vencimento = $data_pagamento;
 
         $valorParcela = $valorTotal / $totalParcelas;   
         
         for ($i = 1; $i <= $totalParcelas; $i++) {
-            $vencimento = date('Y-m-d', strtotime("+$i month", strtotime($dataVencimentoInicial))); 
             $parcelas[] = new Parcela(
                 null,
                 $gastoId,
@@ -20,6 +20,7 @@ class ParcelaFuncoes{
                 $vencimento,
                 null
             );
+            $vencimento = date('Y-m-d', strtotime("+$i month", strtotime($data_pagamento))); 
         }   
         return $parcelas;
     }

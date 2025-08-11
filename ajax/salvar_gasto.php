@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {// '??' verifica se a variavel exist
     $produto = ($_POST['produto'] ?? '') !== '' ? $_POST['produto'] : null;
     $categoria_id = ($_POST['categoria_id'] ?? '') !== '' ? (int)$_POST['categoria_id'] : null;
     $valor = ($_POST['valor'] ?? '') !== '' ? $_POST['valor'] : null;
-    $vencimento = ($_POST['vencimento'] ?? '') !== '' ? $_POST['vencimento'] : null;
     $forma_pagamento_id = ($_POST['forma_pagamento_id'] ?? '') !== '' ? (int)$_POST['forma_pagamento_id'] : null;
     $parcelas_pagas = ($_POST['parcelas_pagas'] ?? '') !== '' ? (int)$_POST['parcelas_pagas'] : null;
     $total_parcelas = ($_POST['total_parcelas'] ?? '') !== '' ? (int)$_POST['total_parcelas'] : null;
@@ -30,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {// '??' verifica se a variavel exist
 
     $valor = str_replace(['.', ','], ['', '.'], $valor);
 
-    $gasto = new Gasto(null, $produto, $categoria_id, null, $valor, $vencimento, $forma_pagamento_id, null, $parcelas_pagas, $total_parcelas, $data_pagamento);
+    $gasto = new Gasto(null, $produto, $categoria_id, null, $valor, $forma_pagamento_id, null, $parcelas_pagas, $total_parcelas, $data_pagamento);
 
     try {
         $idGasto = $gastoPesquisa->insertGasto($gasto); // Agora captura o ID
@@ -42,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {// '??' verifica se a variavel exist
                 'id_gasto' => $idGasto // Retorna o ID via JSON também (se quiser usar no front)
             ]);
 
-            $parcelas = ParcelaFuncoes::gerarParcelas($idGasto, $valor, $total_parcelas, $vencimento);
+            $parcelas = ParcelaFuncoes::gerarParcelas($idGasto, $valor, $total_parcelas, $data_pagamento);
             foreach ($parcelas as $parcela) {
                 $parcelaPesquisa->insertParcela($parcela);
             }

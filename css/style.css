@@ -31,55 +31,64 @@ table {
 
 .menu {
     margin: 0;
-    position: relative;
+    padding: 10px 0;
+    list-style: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 12vw;
+    background: linear-gradient(180deg, #5a3ec8, #7b5de6);
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menu li {
+    position: relative;
 }
 
 .menu a {
+    margin-right: 10px;
     display: block;
-    background: #6949ca;
-    padding: 15px 30px;
-    border-radius: 4px;
+    padding: 14px 20px;
     color: #fff;
-    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.menu a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
 }
 
 .menu .submenu {
     margin: 0;
+    padding: 0;
+    list-style: none;
     display: none;
-    position: absolute;
-    top: 100%;
     flex-direction: column;
+    background: rgba(0, 0, 0, 0.1);
+    border-left: 3px solid rgba(255, 255, 255, 0.2);
 }
 
 .menu .submenu li a {
-    border: 0;
-    margin: 0;
-    border-radius: 0;
-    padding: 10px 20px;
-    color: white;
-    text-transform: uppercase;
-}
-
-.menu .dropdown:hover>a {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    font-size: 14px;
+    padding: 10px 25px;
+    margin-bottom: 3px;
 }
 
 .menu .submenu li a:hover {
-    border: 0px;
-    background-color: #4527a0;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .menu .dropdown:hover .submenu {
-    border: 0px;
     display: flex;
 }
+
 
 .submenu li:last-child a {
     border-bottom-left-radius: 4px;
@@ -125,6 +134,7 @@ table {
 
 .form-registration {
     max-width: 700px;
+    width: 100%;
     margin: auto;
 }
 
@@ -138,6 +148,7 @@ table {
     padding: 5px;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .input-registration {
@@ -220,6 +231,78 @@ table {
     padding: 40px;
     /* Topo | Direita | Baixo | Esquerda */
     margin: 20px;
+    margin-left: 110px;
+}
+
+
+.input-login {
+    padding: 10px;
+    border: 0.5px solid #6949ca;
+    border-radius: 4px;
+    background-color: transparent;
+    outline: none;
+    margin-bottom: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.label-login {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.content-login {
+    border-radius: 4px;
+    background-color: #ebebeb;
+    padding: 30px;
+    /* Topo | Direita | Baixo | Esquerda */
+    margin: 20px;
+    width: 25vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: width 0.3s ease;
+}
+
+a.forgot-password {
+    display: block;
+    font-size: 14px;
+    color: #6949ca;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+a.forgot-password:hover {
+    text-decoration: underline;
+    color: #3e2fbf;
+}
+
+.content-centralize {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+}
+
+.button-container-login {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    /* opcional, só para espaçar */
+}
+
+.submit-button-login {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 15px;
+    background-color: #6949ca;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
 }
 
 @media (max-width:600px) {

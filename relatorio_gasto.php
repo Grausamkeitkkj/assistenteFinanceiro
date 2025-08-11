@@ -73,7 +73,6 @@
                             <th>Produto</th>
                             <th>Categoria</th>
                             <th>Valor</th>
-                            <th>Vencimento</th>
                             <th>Forma de Pagamento</th>
                             <th>Parcelas pagas/Total parcelas</th>
                             <th>Data Pagamento</th>
@@ -83,13 +82,11 @@
                         <tbody>
                             <?php
                                 foreach ($gastoArray as $gasto) {
-                                    $vencimento = $gasto->getVencimento();
                                     $dataPagamento = $gasto->getDataPagamento();
 
                                     $produto = htmlspecialchars($gasto->getProduto());
                                     $categoria = htmlspecialchars($gasto->getNomeCategoria());
                                     $valorFormatado = 'R$ ' . number_format($gasto->getValor(), 2, ',', '.');
-                                    $vencimentoFormatado = !empty($vencimento) ? date('d/m/Y', strtotime($vencimento)) : 'Sem data';
                                     $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
                                     $parcelas = htmlspecialchars($gasto->getParcelasPagas() . '/' . $gasto->getTotalParcelas());
                                     $dataPagamentoFormatado = !empty($dataPagamento) ? date('d/m/Y', strtotime($dataPagamento)) : 'Sem data';
@@ -98,7 +95,6 @@
                                             <td>'.$produto.'</td>
                                             <td>'.$categoria.'</td>
                                             <td>'.$valorFormatado.'</td>
-                                            <td>'.$vencimentoFormatado.'</td>
                                             <td>'.$formaPagamento.'</td>
                                             <td>'.$parcelas.'</td>
                                             <td>'.$dataPagamentoFormatado.'</td>

@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS gasto (
     forma_pagamento_id INT NOT NULL,
     total_parcelas INT DEFAULT NULL,
     parcelas_pagas INT DEFAULT NULL,
-    vencimento DATE DEFAULT NULL,
     data_pagamento DATE DEFAULT NULL,
 
     FOREIGN KEY (categoria_id) REFERENCES categoria_gasto(id_categoria_gasto),
@@ -48,5 +47,3 @@ INSERT INTO forma_pagamento (nome_forma_pagamento) VALUES
 ('Cartão de Débito'),
 ('PIX'),
 ('Boleto');
-
-ALTER TABLE gasto MODIFY vencimento DATE NULL;

@@ -50,10 +50,6 @@
                             <input class="input-registration" id="valor" name="valor" type="text" required>
                         </div>
                         <div class="form-group">
-                            <label class="label-registration" for="vencimento">Vencimento:</label>
-                            <input class="input-registration" id="vencimento" name="vencimento" type="date">
-                        </div>
-                        <div class="form-group">
                             <label class="label-registration" for="forma_pagamento_id">Método de Pagamento:</label>
                             <select class="input-registration" id="forma_pagamento_id" name="forma_pagamento_id" required>
                                 <option value="">Selecione uma opção</option>
