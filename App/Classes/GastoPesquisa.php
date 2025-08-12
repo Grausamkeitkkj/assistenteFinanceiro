@@ -58,7 +58,7 @@ class GastoPesquisa {
        $stmt->bindValue(':data_pagamento', $gasto->getDataPagamento());
         
         if ($stmt->execute()) {
-            return $this->pdo->lastInsertId(); // <-- ISSO É ESSENCIAL
+            return $this->pdo->lastInsertId();
         } else {
             return false;
         }

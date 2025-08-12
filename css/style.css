@@ -345,3 +345,18 @@ a.forgot-password:hover {
     color: #5a3ec8;
     transform: scale(1.2);
 }
+
+.content-register-user {
+    border-radius: 4px;
+    background-color: #ebebeb;
+    padding: 30px;
+    /* Topo | Direita | Baixo | Esquerda */
+    margin: 20px;
+    width: 25vw;
+    height: 43vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: width 0.3s ease;
+}

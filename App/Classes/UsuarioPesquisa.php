@@ -30,4 +30,20 @@ class UsuarioPesquisa {
         }
         return null;
     }
+
+    public function setUsuario(Usuario $usuario){
+        $sql = "INSERT INTO usuario
+                (email, nome, senha)
+                VALUES
+                (:email, :nome, :senha)";
+        
+        $senhaHash = password_hash($usuario->getSenhaUsuario(), PASSWORD_DEFAULT);
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':email', $usuario->getEmailUsuario());
+        $stmt->bindValue(':nome', $usuario->getNomeUsuario());
+        $stmt->bindValue(':senha', $senhaHash);
+
+        $stmt->execute();
+    }
 }

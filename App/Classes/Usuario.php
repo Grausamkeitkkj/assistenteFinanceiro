@@ -33,20 +33,4 @@ class Usuario{
         return $this->senhaUsuario;
     }
 
-    // Setters
-    public function setIdUsuario($idUsuario) {
-        $this->idUsuario = $idUsuario;
-    }
-
-    public function setEmailUsuario($emailUsuario) {
-        $this->emailUsuario = $emailUsuario;
-    }
-
-    public function setNomeUsuario($nomeUsuario) {
-        $this->nomeUsuario = $nomeUsuario;
-    }
-
-    public function setSenhaUsuario($senhaUsuario) {
-        $this->senhaUsuario = $senhaUsuario;
-    }
 }
