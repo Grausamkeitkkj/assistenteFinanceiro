@@ -4,6 +4,7 @@
     use App\Classes\Conexao;
     use App\Classes\Gasto;
     use App\Classes\GastoPesquisa;
+    use App\Classes\ParcelaPesquisa;
 
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
@@ -45,7 +46,7 @@
 	                <option value="11">Novembro</option>
 	                <option value="12">Dezembro</option>
                 </select>
-                <select class="input-registration" id="ano_inicio_tabela" name="ano_inicio" required>
+                <select class="input-registration ano" id="ano_inicio_tabela" name="ano_inicio" required>
                     <option value="">Selecione um ano</option>
                 </select>
                 <label class="label-grafico" for="ano_fim">Até:</label>
@@ -64,7 +65,7 @@
 	                <option value="11">Novembro</option>
 	                <option value="12">Dezembro</option>
                 </select>
-                <select class="input-registration" id="ano_fim" name="ano_fim" required>
+                <select class="input-registration ano" id="ano_fim_tabela" name="ano_fim" required>
                     <option value="">Selecione um ano</option>
                 </select>
                 <table class="table">
@@ -76,37 +77,54 @@
                             <th>Forma de Pagamento</th>
                             <th>Parcelas pagas/Total parcelas</th>
                             <th>Data Pagamento</th>
+                            <th>Parcelas</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tbody>
-                            <?php
-                                foreach ($gastoArray as $gasto) {
-                                    $dataPagamento = $gasto->getDataPagamento();
+                        <?php
+                            foreach ($gastoArray as $index => $gasto) {
+                                $parcelasArray = ParcelaPesquisa::getParcelasPorIdGasto($pdo, $gasto->getIdGasto());
+                                $dataPagamento = $gasto->getDataPagamento();
+                                $produto = htmlspecialchars($gasto->getProduto());
+                                $categoria = htmlspecialchars($gasto->getNomeCategoria());
+                                $valorFormatado = 'R$ ' . number_format($gasto->getValor(), 2, ',', '.');
+                                $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
+                                $parcelas = htmlspecialchars($gasto->getParcelasPagas() . '/' . $gasto->getTotalParcelas());
+                                $dataPagamentoFormatado = !empty($dataPagamento) ? date('d/m/Y', strtotime($dataPagamento)) : 'Sem data';
 
-                                    $produto = htmlspecialchars($gasto->getProduto());
-                                    $categoria = htmlspecialchars($gasto->getNomeCategoria());
-                                    $valorFormatado = 'R$ ' . number_format($gasto->getValor(), 2, ',', '.');
-                                    $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
-                                    $parcelas = htmlspecialchars($gasto->getParcelasPagas() . '/' . $gasto->getTotalParcelas());
-                                    $dataPagamentoFormatado = !empty($dataPagamento) ? date('d/m/Y', strtotime($dataPagamento)) : 'Sem data';
+                                // Linha principal
+                                echo '<tr>
+                                        <td>'.$produto.'</td>
+                                        <td>'.$categoria.'</td>
+                                        <td>'.$valorFormatado.'</td>
+                                        <td>'.$formaPagamento.'</td>
+                                        <td>'.$parcelas.'</td>
+                                        <td>'.$dataPagamentoFormatado.'</td>
+                                        <td>
+                                          <button class="toggle-btn" data-index="'.$index.'">+</button>
+                                        </td>
+                                      </tr>';
+
+                                foreach ($parcelasArray as $parcela) {
+                                    $valorParcela = 'R$ ' . number_format($parcela->getValor(), 2, ',', '.');
+                                    $vencimento = date('d/m/Y', strtotime($parcela->getVencimento()));
                                 
-                                    echo '<tr>
-                                            <td>'.$produto.'</td>
-                                            <td>'.$categoria.'</td>
-                                            <td>'.$valorFormatado.'</td>
-                                            <td>'.$formaPagamento.'</td>
-                                            <td>'.$parcelas.'</td>
-                                            <td>'.$dataPagamentoFormatado.'</td>
+                                    echo '<tr class="expandable-row parcela-'.$index.'" style="display:none;">
+                                            <td colspan="2"></td>
+                                            <td colspan="3">
+                                                Parcela '.$parcela->getNumeroParcela().' - '.$valorParcela.' - Vencimento: '.$vencimento.'
+                                            </td>
+                                            <td colspan="2"></td>
                                           </tr>';
                                 }
-                            ?>
-                        </tbody>
+                            }
+
+                        ?>
                     </tbody>
                 </table>
             </div>
             <div class="content">
-                <label class="label-grafico" for="ano_inicio">De:</label>
+                <label class="label-grafico">De:</label>
                     <select class="input-registration" id="mes_inicio" name="mes_inicio" required>
                         <option>Escolha o mês</option>
 	                    <option value="01">Janeiro</option>
@@ -122,11 +140,11 @@
 	                    <option value="11">Novembro</option>
 	                    <option value="12">Dezembro</option>
                     </select>
-                    <select class="input-registration" id="ano_inicio" name="ano_inicio" required>
+                    <select class="input-registration ano" id="ano_inicio_grafico" name="ano_inicio" required>
                         <option value="">Selecione um ano</option>
                     </select>
 
-                    <label class="label-grafico" for="ano_fim">Até:</label>
+                    <label class="label-grafico">Até:</label>
                     <select class="input-registration" id="mes_fim" name="mes_fim" required>
                         <option>Escolha o mês</option>
 	                    <option value="01">Janeiro</option>
@@ -142,7 +160,7 @@
 	                    <option value="11">Novembro</option>
 	                    <option value="12">Dezembro</option>
                     </select>
-                    <select class="input-registration" id="ano_fim" name="ano_fim" required>
+                    <select class="input-registration ano" id="ano_fim_grafico" name="ano_fim" required>
                         <option value="">Selecione um ano</option>
                     </select>
                 <canvas id="grafico1"></canvas>
@@ -181,21 +199,36 @@
             });
         </script>
         <script>
-            // Preenche os selects com anos de 2000 até o ano atual
-            const selectAnoInicio = document.getElementById("ano_inicio");
-            const selectAnoFim = document.getElementById("ano_fim");
+            const selectsAno = document.querySelectorAll(".ano");
             const anoAtual = new Date().getFullYear();
 
-            for (let ano = anoAtual; ano >= 2000; ano--) {
-                const optionInicio = document.createElement("option");
-                const optionFim = document.createElement("option");
-            
-                optionInicio.value = optionFim.value = ano;
-                optionInicio.textContent = optionFim.textContent = ano;
-            
-                selectAnoInicio.appendChild(optionInicio);
-                selectAnoFim.appendChild(optionFim);
-            }
+            selectsAno.forEach(select => {
+                for (let ano = anoAtual; ano >= 2000; ano--) {
+                    const option = document.createElement("option");
+                    option.value = ano;
+                    option.textContent = ano;
+                    select.appendChild(option);
+                }
+            });
+        </script>
+        <script>
+            document.querySelectorAll('.toggle-btn').forEach(botao => {
+                botao.addEventListener('click', () => {
+                    const index = botao.getAttribute('data-index');
+                    const linhasParcelas = document.querySelectorAll('.parcela-' + index);
+                
+                    //verifica se alguma das linhas com o index igual está aberta
+                    const estaAberto = Array.from(linhasParcelas).some(linha => linha.style.display === 'table-row'); 
+                
+                    if (estaAberto) {
+                        linhasParcelas.forEach(linha => linha.style.display = 'none');
+                        botao.textContent = '+';
+                    } else {
+                        linhasParcelas.forEach(linha => linha.style.display = 'table-row');
+                        botao.textContent = '-';
+                    }
+                });
+            });
         </script>
     </body>
 </html>

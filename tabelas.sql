@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS gasto (
 
 CREATE TABLE IF NOT EXISTS parcela (
     id_parcela INT PRIMARY KEY AUTO_INCREMENT,
-    gasto_id INT NOT NULL,
+    id_gasto INT NOT NULL,
     numero_parcela INT NOT NULL,
     valor DECIMAL(10,2) NOT NULL,
     vencimento DATE NOT NULL,

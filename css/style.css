@@ -323,3 +323,24 @@ a.forgot-password:hover {
         gap: 20px;
     }
 }
+
+.expandable-row td {
+    background-color: #f0f0f0;
+    padding: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+.toggle-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #6949ca;
+    transition: transform 0.3s ease;
+}
+
+.toggle-btn:hover {
+    color: #5a3ec8;
+    transform: scale(1.2);
+}

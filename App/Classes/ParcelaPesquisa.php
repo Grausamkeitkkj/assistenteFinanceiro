@@ -11,10 +11,11 @@ class ParcelaPesquisa {
         $this->pdo = $pdo;
     }
 
-    public static function getParcelas(PDO $pdo){
-        $sql = "SELECT a.*, b.*
+    public static function getParcelasPorIdGasto(PDO $pdo, $idGasto){
+        $sql = "SELECT a.*
                 FROM parcela a
-                JOIN gasto b ON a.gasto_id = b.id_gasto";
+                JOIN gasto b ON a.id_gasto = b.id_gasto
+                WHERE a.id_gasto=".$idGasto;
             
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
@@ -24,7 +25,7 @@ class ParcelaPesquisa {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $parcelas[] = new Parcela(
                 $row['id_parcela'],
-                $row['gasto_id'],
+                $row['id_gasto'],
                 $row['numero_parcela'],
                 $row['valor'],
                 $row['vencimento'],
