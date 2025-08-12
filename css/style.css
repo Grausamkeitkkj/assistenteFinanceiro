@@ -57,7 +57,7 @@ table {
     font-weight: 500;
     text-decoration: none;
     border-radius: 8px;
-    transition: all 0.25s ease;
+    transition: all 0.5s ease;
 }
 
 .menu a:hover {
@@ -221,7 +221,7 @@ table {
 .button-container {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 6vh;
     /* opcional, só para espaçar */
 }
 
@@ -231,7 +231,18 @@ table {
     padding: 40px;
     /* Topo | Direita | Baixo | Esquerda */
     margin: 20px;
-    margin-left: 110px;
+    margin-left: 10vw;
+}
+
+.content-cadastro-gasto {
+    width: 40vw;
+    height: 57vh;
+    border-radius: 4px;
+    background-color: #ebebeb;
+    padding: 40px;
+    /* Topo | Direita | Baixo | Esquerda */
+    margin: 20px;
+    margin-left: 10vw;
 }
 
 

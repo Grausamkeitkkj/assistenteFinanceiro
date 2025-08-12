@@ -26,7 +26,7 @@
             <?php include_once("menu.php") ?>
         </header>
         <main>
-            <div class="content">
+            <div class="content-cadastro-gasto">
                 <h2 class="title-registration">Cadastro de gasto/despesa/investimento</h2>
                 <form class="form-registration" method="POST">
                     <div class="grid">
