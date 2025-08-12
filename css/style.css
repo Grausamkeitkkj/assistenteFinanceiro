@@ -269,6 +269,7 @@ table {
     /* Topo | Direita | Baixo | Esquerda */
     margin: 20px;
     width: 25vw;
+    height: 35vh;
     display: flex;
     align-items: center;
     justify-content: center;

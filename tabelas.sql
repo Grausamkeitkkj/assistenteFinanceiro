@@ -1,12 +1,13 @@
 CREATE TABLE IF NOT EXISTS categoria_gasto (
     id_categoria_gasto INT PRIMARY KEY AUTO_INCREMENT,
-    nome_categoria_gasto VARCHAR(100) NOT NULL
+    nome_categoria_gasto VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS forma_pagamento (
     id_forma_pagamento INT PRIMARY KEY AUTO_INCREMENT,
-    nome_forma_pagamento VARCHAR(100) NOT NULL
+    nome_forma_pagamento VARCHAR(100) NOT NULL UNIQUE
 );
+
 
 CREATE TABLE IF NOT EXISTS gasto (
     id_gasto INT PRIMARY KEY AUTO_INCREMENT,
@@ -33,7 +34,14 @@ CREATE TABLE IF NOT EXISTS parcela (
     FOREIGN KEY (gasto_id) REFERENCES gasto(id_gasto)
 );
 
-INSERT INTO categoria_gasto (nome_categoria_gasto) VALUES
+CREATE TABLE IF NOT EXISTS usuario(
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+INSERT IGNORE INTO categoria_gasto (nome_categoria_gasto) VALUES
 ('Moradia'),
 ('Vestimenta'),
 ('Contas e Serviços'),
@@ -41,7 +49,7 @@ INSERT INTO categoria_gasto (nome_categoria_gasto) VALUES
 ('Gastos Domésticos'),
 ('Viagem');
 
-INSERT INTO forma_pagamento (nome_forma_pagamento) VALUES 
+INSERT IGNORE INTO forma_pagamento (nome_forma_pagamento) VALUES 
 ('Dinheiro'),
 ('Cartão de Crédito'),
 ('Cartão de Débito'),

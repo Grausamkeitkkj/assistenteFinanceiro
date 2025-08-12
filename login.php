@@ -23,12 +23,12 @@
             <div class="content-centralize">
                 <div class="content-login">
                     <h2 class="title-registration">Login</h2>
-                    <form class="form-registration" method="POST">
+                    <form class="form-registration" method="POST" action='Auth.php'>
                         <div class="form-group">
-                            <label class="label-login" for="produto">Email/Nome de usuário:</label>
-                            <input class="input-login" id="produto" name="produto" type="text" required placeholder="Digite seu e-mail ou nome de usuário">
-                            <label class="label-login" for="produto">Senha:</label>
-                            <input class="input-login" id="produto" name="produto" type="password" required placeholder="Digite sua senha">
+                            <label class="label-login">Email/Nome de usuário:</label>
+                            <input class="input-login" id="produto" name="emailnome" type="text" required placeholder="Digite seu e-mail ou nome de usuário">
+                            <label class="label-login">Senha:</label>
+                            <input class="input-login" id="produto" name="senha" type="password" required placeholder="Digite sua senha">
                             <a href="#" class="forgot-password">Esqueceu a senha?</a>
                             <div class="button-container-login">
                                 <button class="submit-button-login" type="submit">Login</button>
