@@ -4,34 +4,31 @@
     use App\Classes\Conexao;
     use App\Classes\Usuario;
     use App\Classes\UsuarioPesquisa;
-    use App\Classes\Auth;
-
-    Auth::requireLogin();
 
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $nome = $_POST['nome'] ?? '';
-    $senha = $_POST['senha'] ?? '';
-    $senhaConfirmacao = $_POST['senhaConfirmacao'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $nome = $_POST['nome'] ?? '';
+        $senha = $_POST['senha'] ?? '';
+        $senhaConfirmacao = $_POST['senhaConfirmacao'] ?? '';
 
-    if ($senha !== $senhaConfirmacao) {
-        echo "Senhas não conferem.";
-        exit;
+        if ($senha !== $senhaConfirmacao) {
+            echo "Senhas não conferem.";
+            exit;
+        }
+
+        $usuario = new Usuario(null, $email, $nome, $senha);
+
+        $conexao = new Conexao();
+        $pdo = $conexao->getPdo();
+
+        $usuarioPesquisa = new UsuarioPesquisa($pdo);
+        $usuarioPesquisa->setUsuario($usuario);
+
+        echo "Usuário cadastrado com sucesso!";
     }
-
-    $usuario = new Usuario(null, $email, $nome, $senha);
-
-    $conexao = new Conexao();
-    $pdo = $conexao->getPdo();
-
-    $usuarioPesquisa = new UsuarioPesquisa($pdo);
-    $usuarioPesquisa->setUsuario($usuario);
-
-    echo "Usuário cadastrado com sucesso!";
-}
 ?>
 
 <!DOCTYPE html>

@@ -10,6 +10,8 @@
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
 
+    print_r($_SESSION);
+
     $formaPagamentoArray = FormaPagamento::getFormaPagamento($pdo);
     $categoriaPagamentoArray = CategoriaGasto::getCategoriaGasto($pdo);
 ?>

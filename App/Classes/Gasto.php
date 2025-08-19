@@ -14,8 +14,9 @@ class Gasto {
     private $parcelas_pagas;
     private $total_parcelas;
     private $data_pagamento;
+    private $id_usuario_gasto;
 
-    public function __construct($id_gasto, $produto, $categoria_id, $nome_categoria, $valor, $forma_pagamento_id, $nome_forma_pagamento, $parcelas_pagas, $total_parcelas, $data_pagamento) {
+    public function __construct($id_gasto, $produto, $categoria_id, $nome_categoria, $valor, $forma_pagamento_id, $nome_forma_pagamento, $parcelas_pagas, $total_parcelas, $data_pagamento, $id_usuario_gasto) {
         $this->id_gasto = $id_gasto;
         $this->produto = $produto;
         $this->categoria_id = $categoria_id;
@@ -26,6 +27,7 @@ class Gasto {
         $this->parcelas_pagas = $parcelas_pagas;
         $this->total_parcelas = $total_parcelas;
         $this->data_pagamento = $data_pagamento;
+        $this->id_usuario_gasto = $id_usuario_gasto;
     }
 
     public function getIdGasto() {
@@ -66,5 +68,8 @@ class Gasto {
 
     public function getDataPagamento() {
         return $this->data_pagamento;
+    }
+    public function getIdUsuarioGasto() {
+        return $this->id_usuario_gasto;
     }
 }

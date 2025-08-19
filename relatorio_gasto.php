@@ -12,9 +12,9 @@
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
 
-    $gastoArray = GastoPesquisa::getGasto($pdo);
+    $gastoArray = GastoPesquisa::getGasto($pdo, $_SESSION['idUsuario']);
 
-    $GastoporMes = GastoPesquisa::getGastoAgrupadoPorMesAno($pdo);
+    $GastoporMes = GastoPesquisa::getGastoAgrupadoPorMesAno($pdo, $_SESSION['idUsuario']);
     $labels = array_column($GastoporMes, 'mes_ano_label');// extrai da array os valores da coluna 'mes_ano_label'
     $valores = array_column($GastoporMes, 'total_valor');
 ?>

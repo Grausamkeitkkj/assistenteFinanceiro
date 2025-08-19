@@ -11,7 +11,7 @@ class GastoPesquisa {
         $this->pdo = $pdo;
     }
 
-    public static function getGasto(PDO $pdo) { //passando um objeto do tipo PDO, dizendo a conexao
+    public static function getGasto(PDO $pdo, int $idUsuario) {
         $sql = "SELECT 
                     a.*, 
                     b.nome_categoria_gasto, 
@@ -19,13 +19,14 @@ class GastoPesquisa {
                 FROM gasto a
                 JOIN categoria_gasto b ON a.categoria_id = b.id_categoria_gasto
                 JOIN forma_pagamento c ON a.forma_pagamento_id = c.id_forma_pagamento
-                ";
+                WHERE a.id_usuario_gasto = :id_usuario_gasto";
 
         $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
 
         $gastos = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {// PDO::FETCH_ASSOC é uma constante da classe PDO que representa o modo de retorno "array associativo"
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $gastos[] = new Gasto(
                 $row['id_gasto'],
                 $row['produto'],
@@ -36,7 +37,8 @@ class GastoPesquisa {
                 $row['nome_forma_pagamento'],
                 $row['parcelas_pagas'],
                 $row['total_parcelas'],
-                $row['data_pagamento']
+                $row['data_pagamento'],
+                $row['id_usuario_gasto']
             );
         }
         return $gastos;
@@ -44,9 +46,9 @@ class GastoPesquisa {
 
     public function insertGasto(Gasto $gasto) {
        $sql = "INSERT INTO gasto 
-          (produto, categoria_id, valor, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento)
+          (produto, categoria_id, valor, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento, id_usuario_gasto)
           VALUES 
-          (:produto, :categoria_id, :valor, :forma_pagamento_id, :parcelas_pagas, :total_parcelas, :data_pagamento)";
+          (:produto, :categoria_id, :valor, :forma_pagamento_id, :parcelas_pagas, :total_parcelas, :data_pagamento, :id_usuario_gasto)";
     
        $stmt = $this->pdo->prepare($sql);
        $stmt->bindValue(':produto', $gasto->getProduto());
@@ -56,6 +58,7 @@ class GastoPesquisa {
        $stmt->bindValue(':parcelas_pagas', $gasto->getParcelasPagas(), PDO::PARAM_INT);
        $stmt->bindValue(':total_parcelas', $gasto->getTotalParcelas(), PDO::PARAM_INT);
        $stmt->bindValue(':data_pagamento', $gasto->getDataPagamento());
+       $stmt->bindValue(':id_usuario_gasto', $gasto->getIdUsuarioGasto());
         
         if ($stmt->execute()) {
             return $this->pdo->lastInsertId();
@@ -66,16 +69,19 @@ class GastoPesquisa {
     }
     
 
-    public static function getGastoAgrupadoPorMesAno(PDO $pdo){
+    public static function getGastoAgrupadoPorMesAno(PDO $pdo, $idUsuario){
         $sql = "SELECT 
                     DATE_FORMAT(a.data_pagamento, '%Y-%m') AS mes_ano,
                     DATE_FORMAT(a.data_pagamento, '%M %Y') AS mes_ano_label,
                     SUM(a.valor) AS total_valor
                 FROM gasto a
+                WHERE a.id_usuario_gasto=:id_usuario_gasto
                 GROUP BY mes_ano
-                ORDER BY mes_ano DESC";
+                ORDER BY mes_ano DESC
+                ";
 
         $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
 
         $resultado = [];
