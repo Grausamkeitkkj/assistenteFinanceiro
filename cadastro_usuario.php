@@ -4,6 +4,9 @@
     use App\Classes\Conexao;
     use App\Classes\Usuario;
     use App\Classes\UsuarioPesquisa;
+    use App\Classes\Auth;
+
+    Auth::requireLogin();
 
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();

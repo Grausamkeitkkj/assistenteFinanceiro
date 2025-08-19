@@ -5,6 +5,9 @@
     use App\Classes\Gasto;
     use App\Classes\GastoPesquisa;
     use App\Classes\ParcelaPesquisa;
+    use App\Classes\Auth;
+
+    Auth::requireLogin();
 
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
