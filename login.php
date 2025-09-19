@@ -7,12 +7,13 @@ use App\Classes\Auth;
 
 $conexao = new Conexao();
 $pdo = $conexao->getPdo();
+$usuarioPesquisa = new UsuarioPesquisa($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['emailnome'] ?? null;
     $senha = $_POST['senha'] ?? null;
 
-    $usuario = UsuarioPesquisa::getUsuarioPorEmail($pdo, $email);
+    $usuario = $usuarioPesquisa->getUsuarioPorEmail($email);
 
     if ($usuario && password_verify($senha, $usuario->getSenhaUsuario())) {
         Auth::login($usuario);

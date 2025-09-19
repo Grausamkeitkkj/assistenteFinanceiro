@@ -1,12 +1,3 @@
-<?php
-    require_once __DIR__ . '/vendor/autoload.php';
-
-    use App\Classes\Conexao;
-
-    $conexao = new Conexao();
-    $pdo = $conexao->getPdo();
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,6 +24,9 @@
                             <div class="button-container-login">
                                 <button class="submit-button-login" type="submit">Login</button>
                             </div>
+                            <p class="signup-link">
+                                Não tem conta? <a href="cadastro_usuario.php">Cadastre-se aqui</a>
+                            </p>
                         </div>
                     </form>
                 </div>

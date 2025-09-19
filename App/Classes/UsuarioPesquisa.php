@@ -11,10 +11,10 @@ class UsuarioPesquisa {
         $this->pdo = $pdo;
     }
 
-    public static function getUsuarioPorEmail(PDO $pdo, $email){
+    public function getUsuarioPorEmail($email){
         $sql = "SELECT * FROM usuario WHERE email = :email";
 
-        $stmt = $pdo->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
 

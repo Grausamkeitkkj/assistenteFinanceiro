@@ -217,10 +217,13 @@
         <script>
             document.querySelectorAll('.toggle-btn').forEach(botao => {
                 botao.addEventListener('click', () => {
+                    // Pega o índice do botão clicado, que corresponde ao grupo de parcelas
                     const index = botao.getAttribute('data-index');
+                    // Seleciona todas as linhas de parcelas que possuem a classe referente ao índice
                     const linhasParcelas = document.querySelectorAll('.parcela-' + index);
                 
-                    //verifica se alguma das linhas com o index igual está aberta
+                    // Verifica se alguma das linhas de parcela está visível (aberta)
+                    // Se pelo menos uma linha estiver com display igual a 'table-row', retorna true
                     const estaAberto = Array.from(linhasParcelas).some(linha => linha.style.display === 'table-row'); 
                 
                     if (estaAberto) {
