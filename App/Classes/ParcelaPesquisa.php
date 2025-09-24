@@ -11,17 +11,16 @@ class ParcelaPesquisa {
         $this->pdo = $pdo;
     }
 
-    public static function getParcelasPorIdGasto(PDO $pdo, $idGasto){
+    public function getParcelasPorIdGasto($idGasto){
         $sql = "SELECT a.*
                 FROM parcela a
                 JOIN gasto b ON a.gasto_id = b.id_gasto
-                WHERE a.gasto_id=".$idGasto;
-            
-        $stmt = $pdo->prepare($sql);
+                WHERE a.gasto_id = :id_gasto";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_gasto', $idGasto, PDO::PARAM_INT);
         $stmt->execute();
 
         $parcelas = [];
-
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $parcelas[] = new Parcela(
                 $row['id_parcela'],

@@ -133,9 +133,9 @@ table {
 }
 
 .form-registration {
-    max-width: 700px;
     width: 100%;
-    margin: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .grid {
@@ -211,7 +211,6 @@ table {
     font-size: 15px;
     background-color: #6949ca;
     color: #fff;
-    margin-bottom: 4px;
     letter-spacing: 0.5px;
     text-align: center;
     border: none;
@@ -236,7 +235,7 @@ table {
 
 .content-cadastro-gasto {
     width: 40vw;
-    height: 57vh;
+    height: 45vh;
     border-radius: 4px;
     background-color: #ebebeb;
     padding: 40px;
@@ -300,7 +299,6 @@ a.forgot-password:hover {
 .button-container-login {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
     /* opcional, só para espaçar */
 }
 
@@ -359,4 +357,16 @@ a.forgot-password:hover {
     justify-content: center;
     flex-direction: column;
     transition: width 0.3s ease;
+}
+
+.submit-button-table {
+    padding: 15px 20px;
+    font-size: 15px;
+    background-color: #6949ca;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
 }

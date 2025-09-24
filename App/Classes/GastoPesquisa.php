@@ -11,7 +11,7 @@ class GastoPesquisa {
         $this->pdo = $pdo;
     }
 
-    public static function getGasto(PDO $pdo, int $idUsuario) {
+    public function getGasto(int $idUsuario) {
         $sql = "SELECT 
                     a.*, 
                     b.nome_categoria_gasto, 
@@ -21,7 +21,7 @@ class GastoPesquisa {
                 JOIN forma_pagamento c ON a.forma_pagamento_id = c.id_forma_pagamento
                 WHERE a.id_usuario_gasto = :id_usuario_gasto";
 
-        $stmt = $pdo->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
 
@@ -69,7 +69,7 @@ class GastoPesquisa {
     }
     
 
-    public static function getGastoAgrupadoPorMesAno(PDO $pdo, $idUsuario){
+    public function getGastoAgrupadoPorMesAno($idUsuario){
         $sql = "SELECT 
                     DATE_FORMAT(a.data_pagamento, '%Y-%m') AS mes_ano,
                     DATE_FORMAT(a.data_pagamento, '%M %Y') AS mes_ano_label,
@@ -80,7 +80,7 @@ class GastoPesquisa {
                 ORDER BY mes_ano DESC
                 ";
 
-        $stmt = $pdo->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
 

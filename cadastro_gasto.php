@@ -10,8 +10,6 @@
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
 
-    print_r($_SESSION);
-
     $formaPagamentoArray = FormaPagamento::getFormaPagamento($pdo);
     $categoriaPagamentoArray = CategoriaGasto::getCategoriaGasto($pdo);
 ?>
@@ -65,12 +63,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="label-registration" for="parcelas_pagas">Parcelas Pagas:</label>
-                            <input class="input-registration" id="parcelas_pagas" name="parcelas_pagas" type="number" min="0" value="1">
-                        </div>
-                        <div class="form-group">
                             <label class="label-registration" for="total_parcelas">Total Parcelas:</label>
-                            <input class="input-registration" id="total_parcelas" name="total_parcelas" type="number" min="1" value="1">
+                            <input class="input-registration" id="total_parcelas" name="total_parcelas" type="number" min="1" required>
                         </div>
                         <div class="form-group">
                             <label class="label-registration" for="data_pagamento">Data Pagamento:</label>

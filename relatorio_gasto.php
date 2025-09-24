@@ -6,15 +6,18 @@
     use App\Classes\GastoPesquisa;
     use App\Classes\ParcelaPesquisa;
     use App\Classes\Auth;
+    use App\Classes\FuncoesUteis;
 
     Auth::requireLogin();
 
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
 
-    $gastoArray = GastoPesquisa::getGasto($pdo, $_SESSION['idUsuario']);
+    $gastoPesquisa = new GastoPesquisa($pdo);
+    
+    $gastoArray = $gastoPesquisa->getGasto($_SESSION['idUsuario']);
 
-    $GastoporMes = GastoPesquisa::getGastoAgrupadoPorMesAno($pdo, $_SESSION['idUsuario']);
+    $GastoporMes = $gastoPesquisa->getGastoAgrupadoPorMesAno($_SESSION['idUsuario']);
     $labels = array_column($GastoporMes, 'mes_ano_label');// extrai da array os valores da coluna 'mes_ano_label'
     $valores = array_column($GastoporMes, 'total_valor');
 ?>
@@ -71,6 +74,7 @@
                 <select class="input-registration ano" id="ano_fim_tabela" name="ano_fim" required>
                     <option value="">Selecione um ano</option>
                 </select>
+                <button class="submit-button-table" type="submit">Salvar</button>
                 <table class="table">
                     <thead>
                         <tr>
@@ -86,14 +90,14 @@
                     <tbody>
                         <?php
                             foreach ($gastoArray as $index => $gasto) {
-                                $parcelasArray = ParcelaPesquisa::getParcelasPorIdGasto($pdo, $gasto->getIdGasto());
+                                $idGasto = $gasto->getIdGasto();
                                 $dataPagamento = $gasto->getDataPagamento();
                                 $produto = htmlspecialchars($gasto->getProduto());
                                 $categoria = htmlspecialchars($gasto->getNomeCategoria());
-                                $valorFormatado = 'R$ ' . number_format($gasto->getValor(), 2, ',', '.');
+                                $valorFormatado = FuncoesUteis::formatarValorParaExibir($gasto->getValor());
                                 $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
                                 $parcelas = htmlspecialchars($gasto->getParcelasPagas() . '/' . $gasto->getTotalParcelas());
-                                $dataPagamentoFormatado = !empty($dataPagamento) ? date('d/m/Y', strtotime($dataPagamento)) : 'Sem data';
+                                $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
 
                                 // Linha principal
                                 echo '<tr>
@@ -104,22 +108,10 @@
                                         <td>'.$parcelas.'</td>
                                         <td>'.$dataPagamentoFormatado.'</td>
                                         <td>
-                                          <button class="toggle-btn" data-index="'.$index.'">+</button>
+                                          <button class="toggle-btn" data-id-gasto="'.$idGasto.'">+</button>
                                         </td>
                                       </tr>';
 
-                                foreach ($parcelasArray as $parcela) {
-                                    $valorParcela = 'R$ ' . number_format($parcela->getValor(), 2, ',', '.');
-                                    $vencimento = date('d/m/Y', strtotime($parcela->getVencimento()));
-                                
-                                    echo '<tr class="expandable-row parcela-'.$index.'" style="display:none;">
-                                            <td colspan="2"></td>
-                                            <td colspan="3">
-                                                Parcela '.$parcela->getNumeroParcela().' - '.$valorParcela.' - Vencimento: '.$vencimento.'
-                                            </td>
-                                            <td colspan="2"></td>
-                                          </tr>';
-                                }
                             }
 
                         ?>
@@ -217,22 +209,8 @@
         <script>
             document.querySelectorAll('.toggle-btn').forEach(botao => {
                 botao.addEventListener('click', () => {
-                    // Pega o índice do botão clicado, que corresponde ao grupo de parcelas
-                    const index = botao.getAttribute('data-index');
-                    // Seleciona todas as linhas de parcelas que possuem a classe referente ao índice
-                    const linhasParcelas = document.querySelectorAll('.parcela-' + index);
-                
-                    // Verifica se alguma das linhas de parcela está visível (aberta)
-                    // Se pelo menos uma linha estiver com display igual a 'table-row', retorna true
-                    const estaAberto = Array.from(linhasParcelas).some(linha => linha.style.display === 'table-row'); 
-                
-                    if (estaAberto) {
-                        linhasParcelas.forEach(linha => linha.style.display = 'none');
-                        botao.textContent = '+';
-                    } else {
-                        linhasParcelas.forEach(linha => linha.style.display = 'table-row');
-                        botao.textContent = '-';
-                    }
+                    const idGasto = botao.getAttribute('data-id-gasto');
+                    window.location.href = 'parcela_gasto.php?idGasto=' + idGasto;
                 });
             });
         </script>
