@@ -370,3 +370,11 @@ a.forgot-password:hover {
     border: none;
     border-radius: 4px;
 }
+
+.quitar-btn {
+    border: none;
+    background: none;
+    /* opcional, remove cor de fundo */
+    cursor: pointer;
+    /* opcional, mantém o cursor de clique */
+}

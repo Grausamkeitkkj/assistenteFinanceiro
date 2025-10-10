@@ -11,6 +11,5 @@
             <li><a href="cadastro_gasto.php">Cadastrar Gasto</a></li>
         </ul> 
     </li>
-    <li><a href="#">Quitação</a></li>
     <a href="logout.php">Logout</a>
 </ul>

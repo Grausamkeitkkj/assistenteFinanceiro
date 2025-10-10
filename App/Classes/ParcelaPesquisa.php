@@ -12,10 +12,11 @@ class ParcelaPesquisa {
     }
 
     public function getParcelasPorIdGasto($idGasto){
-        $sql = "SELECT a.*
+        $sql = "SELECT a.id_parcela, a.gasto_id, a.numero_parcela, a.valor, a.vencimento, a.data_pagamento
                 FROM parcela a
                 JOIN gasto b ON a.gasto_id = b.id_gasto
-                WHERE a.gasto_id = :id_gasto";
+                WHERE a.gasto_id = :id_gasto
+                ORDER BY a.numero_parcela ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id_gasto', $idGasto, PDO::PARAM_INT);
         $stmt->execute();
@@ -50,4 +51,16 @@ class ParcelaPesquisa {
         return $stmt->execute();
     }
 
-}
+    public function quitarParcela($idParcela) {
+        $sql = "UPDATE parcela 
+                SET data_pagamento = CURRENT_DATE 
+                WHERE id_parcela = :id_parcela";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_parcela', $idParcela, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Retorna a data atual no formato YYYY-MM-DD
+        return date('Y-m-d');
+    }
+} 

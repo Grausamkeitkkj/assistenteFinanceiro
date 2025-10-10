@@ -108,7 +108,7 @@
                                         <td>'.$parcelas.'</td>
                                         <td>'.$dataPagamentoFormatado.'</td>
                                         <td>
-                                          <button class="toggle-btn" data-id-gasto="'.$idGasto.'">+</button>
+                                            <button class="toggle-btn" data-id-gasto="'.$idGasto.'">+</button>
                                         </td>
                                       </tr>';
 
@@ -194,22 +194,22 @@
             });
         </script>
         <script>
-            const selectsAno = document.querySelectorAll(".ano");
-            const anoAtual = new Date().getFullYear();
-
-            selectsAno.forEach(select => {
-                for (let ano = anoAtual; ano >= 2000; ano--) {
-                    const option = document.createElement("option");
-                    option.value = ano;
-                    option.textContent = ano;
-                    select.appendChild(option);
-                }
+            $(document).ready(function() {
+                var anoAtual = new Date().getFullYear();
+                $('.ano').each(function() {
+                    for (var ano = anoAtual; ano >= 2000; ano--) {
+                        $(this).append($('<option>', {
+                            value: ano,
+                            text: ano
+                        }));
+                    }
+                });
             });
         </script>
         <script>
-            document.querySelectorAll('.toggle-btn').forEach(botao => {
-                botao.addEventListener('click', () => {
-                    const idGasto = botao.getAttribute('data-id-gasto');
+            $(document).ready(function() {
+                $('.toggle-btn').on('click', function() {
+                    var idGasto = $(this).data('id-gasto');
                     window.location.href = 'parcela_gasto.php?idGasto=' + idGasto;
                 });
             });

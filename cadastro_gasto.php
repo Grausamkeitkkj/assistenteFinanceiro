@@ -11,7 +11,7 @@
     $pdo = $conexao->getPdo();
 
     $formaPagamentoArray = FormaPagamento::getFormaPagamento($pdo);
-    $categoriaPagamentoArray = CategoriaGasto::getCategoriaGasto($pdo);
+    $categoriaGastoArray = CategoriaGasto::getCategoriaGasto($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -41,8 +41,8 @@
                             <select class="input-registration" id="categoria_id" name="categoria_id" required>
                                 <option value="">Selecione uma opção</option>
                                 <?php
-                                    foreach($categoriaPagamentoArray as $categoriaPagamento){
-                                        echo "<option value='".$categoriaPagamento->getIdCategoriaGasto()."'>".htmlspecialchars($categoriaPagamento->getNomeCategoriaGasto())."</option>";
+                                    foreach($categoriaGastoArray as $categoriaGasto){
+                                        echo "<option value='".$categoriaGasto->getIdCategoriaGasto()."'>".htmlspecialchars($categoriaGasto->getNomeCategoriaGasto())."</option>";
                                     }
                                 ?>
                             </select>
@@ -52,7 +52,7 @@
                             <input class="input-registration" id="valor" name="valor" type="text" required>
                         </div>
                         <div class="form-group">
-                            <label class="label-registration" for="forma_pagamento_id">Método de Pagamento:</label>
+                            <label class="label-registration" for="forma_pagamento_id">Método de pagamento:</label>
                             <select class="input-registration" id="forma_pagamento_id" name="forma_pagamento_id" required>
                                 <option value="">Selecione uma opção</option>
                                 <?php
@@ -63,11 +63,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="label-registration" for="total_parcelas">Total Parcelas:</label>
+                            <label class="label-registration" for="total_parcelas">Total de parcelas:</label>
                             <input class="input-registration" id="total_parcelas" name="total_parcelas" type="number" min="1" required>
                         </div>
                         <div class="form-group">
-                            <label class="label-registration" for="data_pagamento">Data Pagamento:</label>
+                            <label class="label-registration" for="data_pagamento">Data do primeiro pagamento:</label>
                             <input class="input-registration" id="data_pagamento" name="data_pagamento" type="date">
                         </div>
                     </div>
@@ -110,6 +110,19 @@
 
                     });
                 });
+
+                $('#forma_pagamento_id').change(function() {
+                    formaPagamento = $(this).val();
+                    totalParcelas = $('#total_parcelas').val();
+                    if(formaPagamento == 3){
+                        $('#total_parcelas').val(1);
+                        $('#total_parcelas').prop('readonly', true);
+                    } else {
+                        $('#total_parcelas').prop('readonly', false);
+                        $('#total_parcelas').val(totalParcelas);
+                    }
+                });
+
             });
         </script>
     </body>

@@ -3,7 +3,7 @@
     use App\Classes\Auth;
     use App\Classes\ParcelaPesquisa;
     use App\Classes\Conexao;
-    use App\Classes\FuncoesUteis;
+    use Util\PHP\FuncoesUteis;
 
     Auth::requireLogin();
 
@@ -36,15 +36,14 @@
                             <th>Número Parcela</th>
                             <th>Valor</th>
                             <th>Vencimento</th>
-                            <th>Data de Pagamento</th>
+                            <th>Data do Pagamento</th>
                             <th>Quitar</th>
-                            <th>Editar</th>
-                            <th>Excluir</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                             foreach ($parcelasArray as $index => $parcela) {
+                                //$index é o índice do array, começando em 0, e $parcela é o objeto Parcela correspondente
                                 $parcelaId = $parcela->getIdParcela();
                                 $numeroParcela = $parcela->getNumeroParcela();
                                 $valor = $parcela->getValor();
@@ -54,14 +53,15 @@
                                 $vencimentoFormatado = FuncoesUteis::formatarDataParaExibir($vencimento);
                                 $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
                                 
-                                echo '<tr>
+                                echo '<tr data-id-parcela="'.$parcelaId.'">
                                         <td>'.$numeroParcela.'</td>
                                         <td>'.$valorFormatado.'</td>
                                         <td>'.$vencimentoFormatado.'</td>
                                         <td>'.$dataPagamentoFormatado.'</td>
-                                        <td><a href="quitar_parcela.php?idParcela='.$parcelaId.'&idGasto='.$idGasto.'">Quitar</a></td>
-                                        <td><a href="editar_parcela.php?idParcela='.$parcelaId.'&idGasto='.$idGasto.'">Editar</a></td>
-                                        <td><a href="excluir_parcela.php?idParcela='.$parcelaId.'&idGasto='.$idGasto.'" onclick="return confirm(\'Tem certeza que deseja excluir esta parcela?\')">Excluir</a></td>
+                                        <td>
+                                            <button class="quitar-btn">✖</button>
+                                        </td>
+
                                       </tr>';
                             }
 
@@ -72,3 +72,30 @@
         </main>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('.quitar-btn').on('click', function(){
+                    var linha = $(this).closest('tr');
+                    var idParcela = linha.data('id-parcela');
+                    var formData = { id_parcela: idParcela };
+
+                    $.ajax({
+                        url: './ajax/quitar_parcela.php',
+                        type: 'POST',
+                        data: formData
+                    }).then(function(response) {
+                        if(response.data_pagamento) {
+                            linha.find('td').eq(3).text(formatarDataBR(response.data_pagamento));
+                        }
+                        alert('Parcela quitada com sucesso!');
+                    }, function(jqXHR, textStatus, errorThrown) {
+                        alert('Erro ao quitar parcela: ' + errorThrown);
+                    });
+                })
+            })
+        </script>
+    </body>
+    <script src="Util/JS/funcoesUteis.js"></script>
+</html>

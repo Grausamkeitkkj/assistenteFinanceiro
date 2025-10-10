@@ -16,7 +16,10 @@ $pdo = $conexao->getPdo();
 $gastoPesquisa = new GastoPesquisa($pdo);
 $parcelaPesquisa = new ParcelaPesquisa($pdo);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {// '??' verifica se a variavel existe e nao e nula. Funciona da mesma forma do isset(). O valor a direita do ?? e o valor padrao
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // '??' -> Verifica se existe, se não existir atribui o valor após '??'
+    // !== '' -> Verifica se o valor não é uma string vazia
+    // : null -> Se for string vazia atribui null
     $produto = ($_POST['produto'] ?? '') !== '' ? $_POST['produto'] : null;
     $categoria_id = ($_POST['categoria_id'] ?? '') !== '' ? (int)$_POST['categoria_id'] : null;
     $valor = ($_POST['valor'] ?? '') !== '' ? $_POST['valor'] : null;
