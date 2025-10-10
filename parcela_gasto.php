@@ -38,12 +38,13 @@
                             <th>Vencimento</th>
                             <th>Data do Pagamento</th>
                             <th>Quitar</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                             foreach ($parcelasArray as $index => $parcela) {
-                                //$index é o índice do array, começando em 0, e $parcela é o objeto Parcela correspondente
+                                // $index é o índice do array, começando em 0, e $parcela é o objeto Parcela correspondente
                                 $parcelaId = $parcela->getIdParcela();
                                 $numeroParcela = $parcela->getNumeroParcela();
                                 $valor = $parcela->getValor();
@@ -52,17 +53,24 @@
                                 $valorFormatado = FuncoesUteis::formatarValorParaExibir($valor);
                                 $vencimentoFormatado = FuncoesUteis::formatarDataParaExibir($vencimento);
                                 $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
-                                
-                                echo '<tr data-id-parcela="'.$parcelaId.'">
-                                        <td>'.$numeroParcela.'</td>
-                                        <td>'.$valorFormatado.'</td>
-                                        <td>'.$vencimentoFormatado.'</td>
-                                        <td>'.$dataPagamentoFormatado.'</td>
-                                        <td>
-                                            <button class="quitar-btn">✖</button>
-                                        </td>
-
-                                      </tr>';
+                        ?>
+                        <tr data-id-parcela="<?= $parcelaId ?>">
+                            <td><?= $numeroParcela ?></td>
+                            <td><?= $valorFormatado ?></td>
+                            <td><?= $vencimentoFormatado ?></td>
+                            <td><?= $dataPagamentoFormatado ?></td>
+                            <td>
+                                <?php if (empty($dataPagamento)): ?>
+                                    <button class="quitar-btn">✖</button>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if (!empty($dataPagamento)): ?>
+                                    <button class="editar-btn">✎</button>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php
                             }
 
                         ?>
@@ -94,8 +102,52 @@
                         alert('Erro ao quitar parcela: ' + errorThrown);
                     });
                 })
+                $('.editar-btn').on('click', function(){
+                    var linha = $(this).closest('tr');
+                    var idParcela = linha.data('id-parcela');
+                    $('#id_parcela').val(idParcela);
+                    $('#modal').css('display', 'flex');
+                });
+
+                $('#modal').on('click', function(e) {
+                    if ($(e.target).is('#modal')) {
+                        $('#modal').css('display', 'none');
+                        $('#id_parcela').val('');
+                        $('#data_pagamento').val('')
+                    }
+                });
+
+                $('#quitado').on('change', function(){
+                    // O caractere ':' indica uma pseudo-classe, que seleciona elementos em um estado específico (ex: :checked, :hover, :focus)
+                    if($(this).is(':checked')){
+                        $('#data_pagamento').prop('disabled', false);
+                    } else {
+                        $('#data_pagamento').prop('disabled', true);
+                        $('#data_pagamento').val('');
+                    }
+                });
+
             })
         </script>
     </body>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <form class="form-registration" method="POST">
+                <div class="grid">
+                    <input type="hidden" id="id_parcela" name="id_parcela" value="">
+                    <div class="form-group">
+                        <label class="label-registration" for="data">Data:</label>
+                        <input class="input-registration" id="data_pagamento" name="data_pagamento" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-registration" for="quitado">Quitado:</label>
+                        <input class="input-registration" id="quitado" name="quitado" type="checkbox">
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="submit-button" type="submit">Salvar</button>
+                </div> 
+            </form>
+        </div>
     <script src="Util/JS/funcoesUteis.js"></script>
 </html>

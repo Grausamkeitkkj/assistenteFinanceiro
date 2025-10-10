@@ -30,7 +30,7 @@ table {
 }
 
 .menu {
-    margin: 0;
+    margin-right: 0px;
     padding: 10px 0;
     list-style: none;
     position: fixed;
@@ -229,8 +229,8 @@ table {
     background-color: #ebebeb;
     padding: 40px;
     /* Topo | Direita | Baixo | Esquerda */
-    margin: 20px;
-    margin-left: 10vw;
+    margin-top: 30px;
+
 }
 
 .content-cadastro-gasto {
@@ -377,4 +377,25 @@ a.forgot-password:hover {
     /* opcional, remove cor de fundo */
     cursor: pointer;
     /* opcional, mantém o cursor de clique */
+}
+
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal-content {
+    background-color: #ccc;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

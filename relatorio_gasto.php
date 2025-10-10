@@ -6,7 +6,7 @@
     use App\Classes\GastoPesquisa;
     use App\Classes\ParcelaPesquisa;
     use App\Classes\Auth;
-    use App\Classes\FuncoesUteis;
+    use Util\PHP\FuncoesUteis;
 
     Auth::requireLogin();
 
@@ -108,7 +108,7 @@
                                         <td>'.$parcelas.'</td>
                                         <td>'.$dataPagamentoFormatado.'</td>
                                         <td>
-                                            <button class="toggle-btn" data-id-gasto="'.$idGasto.'">+</button>
+                                            <button class="parcela-btn" data-id-gasto="'.$idGasto.'">+</button>
                                         </td>
                                       </tr>';
 
@@ -163,6 +163,7 @@
         </main>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script>
             const labels = <?php echo json_encode($labels); ?>;
             const data = <?php echo json_encode($valores); ?>;
@@ -204,11 +205,7 @@
                         }));
                     }
                 });
-            });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $('.toggle-btn').on('click', function() {
+                $('.parcela-btn').on('click', function() {
                     var idGasto = $(this).data('id-gasto');
                     window.location.href = 'parcela_gasto.php?idGasto=' + idGasto;
                 });
