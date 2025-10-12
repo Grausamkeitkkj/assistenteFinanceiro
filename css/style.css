@@ -229,7 +229,7 @@ table {
     background-color: #ebebeb;
     padding: 40px;
     /* Topo | Direita | Baixo | Esquerda */
-    margin-top: 30px;
+    margin-top: 20px;
 
 }
 
@@ -398,4 +398,13 @@ a.forgot-password:hover {
     width: 300px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.margin-relatorio {
+    margin-left: 10vw;
+
+}
+
+.pointer {
+    cursor: pointer;
 }

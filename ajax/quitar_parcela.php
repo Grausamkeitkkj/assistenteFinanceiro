@@ -3,6 +3,9 @@
 
     use App\Classes\Conexao;
     use App\Classes\ParcelaPesquisa;
+    $conexao = new Conexao();
+    $pdo = $conexao->getPdo();
+    $parcelaPesquisa = new ParcelaPesquisa($pdo);
     header('Content-Type: application/json');
 
     if($_SERVER['REQUEST_METHOD'] !== 'POST'){
@@ -16,10 +19,6 @@
         echo json_encode(['success' => false, 'message' => 'ID da parcela não fornecido']);
         exit;
     }
-
-    $conexao = new Conexao();
-    $pdo = $conexao->getPdo();
-    $parcelaPesquisa = new ParcelaPesquisa($pdo);
 
     $dataPagamento = $parcelaPesquisa->quitarParcela($idParcela);
 

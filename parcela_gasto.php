@@ -54,19 +54,19 @@
                                 $vencimentoFormatado = FuncoesUteis::formatarDataParaExibir($vencimento);
                                 $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
                         ?>
-                        <tr data-id-parcela="<?= $parcelaId ?>">
+                        <tr data-pagamento ="<?= $dataPagamentoFormatado ?>" data-id-parcela="<?= $parcelaId ?>">
                             <td><?= $numeroParcela ?></td>
                             <td><?= $valorFormatado ?></td>
                             <td><?= $vencimentoFormatado ?></td>
                             <td><?= $dataPagamentoFormatado ?></td>
                             <td>
                                 <?php if (empty($dataPagamento)): ?>
-                                    <button class="quitar-btn">✖</button>
+                                    <button class="quitar-btn pointer">✖</button>
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <?php if (!empty($dataPagamento)): ?>
-                                    <button class="editar-btn">✎</button>
+                                    <button class="editar-btn pointer">✎</button>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -102,11 +102,36 @@
                         alert('Erro ao quitar parcela: ' + errorThrown);
                     });
                 })
+
+                $('.editar-parcela').on('click', function(e){
+                    e.preventDefault();
+                    var idParcela = $('#id_parcela').val();
+                    var dataPagamento = $('#data_pagamento').val();
+                    var formData = { idParcela: idParcela, dataPagamento: dataPagamento };
+
+                    $.ajax({
+                        url: './ajax/editar_parcela.php',
+                        type: 'POST',
+                        data: formData
+                    }).then(function(response) {
+                        if(response.dataPagamento){
+                            var linhaTabela = $("tr[data-id-parcela='" + idParcela + "']");
+                            linhaTabela.find('td').eq(3).text(formatarDataBR(response.dataPagamento));
+                        }
+                        alert('Parcela editada com sucesso!');
+                        $('#modal').css('display', 'none');
+                    }, function(jqXHR, textStatus, errorThrown) {
+                        alert('Erro ao editar parcela: ' + errorThrown);
+                    });
+                });
+
                 $('.editar-btn').on('click', function(){
                     var linha = $(this).closest('tr');
                     var idParcela = linha.data('id-parcela');
+                    var dataPagamento  = linha.data('pagamento');
                     $('#id_parcela').val(idParcela);
                     $('#modal').css('display', 'flex');
+                    $('#data_pagamento').val(dataPagamento.split('/').reverse().join('-'));
                 });
 
                 $('#modal').on('click', function(e) {
@@ -141,11 +166,11 @@
                     </div>
                     <div class="form-group">
                         <label class="label-registration" for="quitado">Quitado:</label>
-                        <input class="input-registration" id="quitado" name="quitado" type="checkbox">
+                        <input class="input-registration" id="quitado" name="quitado" type="checkbox" checked>
                     </div>
                 </div>
                 <div class="button-container">
-                    <button class="submit-button" type="submit">Salvar</button>
+                    <button class="submit-button pointer editar-parcela" type="submit">Salvar</button>
                 </div> 
             </form>
         </div>

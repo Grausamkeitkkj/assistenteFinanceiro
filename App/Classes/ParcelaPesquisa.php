@@ -63,4 +63,23 @@ class ParcelaPesquisa {
         // Retorna a data atual no formato YYYY-MM-DD
         return date('Y-m-d');
     }
+
+    public function editaDataPagamentoParcela($idParcela, $dataPagamento){
+        if(!empty($dataPagamento)){
+            $sql = "UPDATE parcela
+                    SET data_pagamento = :data_pagamento
+                    WHERE id_parcela = :id_parcela";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':data_pagamento', $dataPagamento);
+            $stmt->bindValue(':id_parcela', $idParcela, PDO::PARAM_INT);
+            return $stmt->execute();
+        } else {
+            $sql = "UPDATE parcela
+                    SET data_pagamento = NULL
+                    WHERE id_parcela = :id_parcela";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':id_parcela', $idParcela, PDO::PARAM_INT);
+            return $stmt->execute();
+        }
+    }
 } 

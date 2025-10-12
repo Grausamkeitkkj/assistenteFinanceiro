@@ -35,7 +35,7 @@
             <?php include_once("menu.php") ?>
         </header>
         <main>
-            <div class="content">
+            <div class="content margin-relatorio">
                 <label class="label-grafico" for="ano_inicio">De:</label>
                 <select class="input-registration" id="mes_inicio_tabela" name="mes_inicio_tabela" required>
                     <option>Escolha o mês</option>
@@ -108,7 +108,7 @@
                                         <td>'.$parcelas.'</td>
                                         <td>'.$dataPagamentoFormatado.'</td>
                                         <td>
-                                            <button class="parcela-btn" data-id-gasto="'.$idGasto.'">+</button>
+                                            <button class="parcela-btn pointer" data-id-gasto="'.$idGasto.'">+</button>
                                         </td>
                                       </tr>';
 
@@ -118,7 +118,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="content">
+            <div class="content margin-relatorio">
                 <label class="label-grafico">De:</label>
                     <select class="input-registration" id="mes_inicio" name="mes_inicio" required>
                         <option>Escolha o mês</option>
