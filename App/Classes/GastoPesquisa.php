@@ -26,7 +26,7 @@ class GastoPesquisa {
         $stmt->execute();
 
         $gastos = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {// FETCH_ASSOC retorna a próxima linha
             $gastos[] = new Gasto(
                 $row['id_gasto'],
                 $row['produto'],
@@ -68,7 +68,6 @@ class GastoPesquisa {
 
     }
     
-
     public function getGastoAgrupadoPorMesAno($idUsuario){
         $sql = "SELECT 
                     DATE_FORMAT(a.data_pagamento, '%Y-%m') AS mes_ano,

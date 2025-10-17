@@ -52,7 +52,7 @@
                                 $dataPagamento = $parcela->getDataPagamento();
                                 $valorFormatado = FuncoesUteis::formatarValorParaExibir($valor);
                                 $vencimentoFormatado = FuncoesUteis::formatarDataParaExibir($vencimento);
-                                $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
+                                $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Não pago';
                         ?>
                         <tr data-pagamento ="<?= $dataPagamentoFormatado ?>" data-id-parcela="<?= $parcelaId ?>">
                             <td><?= $numeroParcela ?></td>
@@ -81,79 +81,6 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-        <script>
-            $(document).ready(function(){
-                $('.quitar-btn').on('click', function(){
-                    var linha = $(this).closest('tr');
-                    var idParcela = linha.data('id-parcela');
-                    var formData = { id_parcela: idParcela };
-
-                    $.ajax({
-                        url: './ajax/quitar_parcela.php',
-                        type: 'POST',
-                        data: formData
-                    }).then(function(response) {
-                        if(response.data_pagamento) {
-                            linha.find('td').eq(3).text(formatarDataBR(response.data_pagamento));
-                        }
-                        alert('Parcela quitada com sucesso!');
-                    }, function(jqXHR, textStatus, errorThrown) {
-                        alert('Erro ao quitar parcela: ' + errorThrown);
-                    });
-                })
-
-                $('.editar-parcela').on('click', function(e){
-                    e.preventDefault();
-                    var idParcela = $('#id_parcela').val();
-                    var dataPagamento = $('#data_pagamento').val();
-                    var formData = { idParcela: idParcela, dataPagamento: dataPagamento };
-
-                    $.ajax({
-                        url: './ajax/editar_parcela.php',
-                        type: 'POST',
-                        data: formData
-                    }).then(function(response) {
-                        if(response.dataPagamento){
-                            var linhaTabela = $("tr[data-id-parcela='" + idParcela + "']");
-                            linhaTabela.find('td').eq(3).text(formatarDataBR(response.dataPagamento));
-                        }
-                        alert('Parcela editada com sucesso!');
-                        $('#modal').css('display', 'none');
-                    }, function(jqXHR, textStatus, errorThrown) {
-                        alert('Erro ao editar parcela: ' + errorThrown);
-                    });
-                });
-
-                $('.editar-btn').on('click', function(){
-                    var linha = $(this).closest('tr');
-                    var idParcela = linha.data('id-parcela');
-                    var dataPagamento  = linha.data('pagamento');
-                    $('#id_parcela').val(idParcela);
-                    $('#modal').css('display', 'flex');
-                    $('#data_pagamento').val(dataPagamento.split('/').reverse().join('-'));
-                });
-
-                $('#modal').on('click', function(e) {
-                    if ($(e.target).is('#modal')) {
-                        $('#modal').css('display', 'none');
-                        $('#id_parcela').val('');
-                        $('#data_pagamento').val('')
-                    }
-                });
-
-                $('#quitado').on('change', function(){
-                    // O caractere ':' indica uma pseudo-classe, que seleciona elementos em um estado específico (ex: :checked, :hover, :focus)
-                    if($(this).is(':checked')){
-                        $('#data_pagamento').prop('disabled', false);
-                    } else {
-                        $('#data_pagamento').prop('disabled', true);
-                        $('#data_pagamento').val('');
-                    }
-                });
-
-            })
-        </script>
     </body>
     <div class="modal" id="modal">
         <div class="modal-content">
@@ -175,4 +102,5 @@
             </form>
         </div>
     <script src="Util/JS/funcoesUteis.js"></script>
+    <script src="Util/JS/parcelaGasto.js"></script>
 </html>

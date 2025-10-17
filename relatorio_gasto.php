@@ -37,40 +37,12 @@
         <main>
             <div class="content margin-relatorio">
                 <label class="label-grafico" for="ano_inicio">De:</label>
-                <select class="input-registration" id="mes_inicio_tabela" name="mes_inicio_tabela" required>
-                    <option>Escolha o mês</option>
-	                <option value="01">Janeiro</option>
-	                <option value="02">Fevereiro</option>
-	                <option value="03">Março</option>
-	                <option value="04">Abril</option>
-	                <option value="05">Maio</option>
-	                <option value="06">Junho</option>
-	                <option value="07">Julho</option>
-	                <option value="08">Agosto</option>
-	                <option value="09">Setembro</option>
-	                <option value="10">Outubro</option>
-	                <option value="11">Novembro</option>
-	                <option value="12">Dezembro</option>
-                </select>
+                <select class="input-registration" id="mes_inicio_tabela" name="mes_inicio_tabela" required></select>
                 <select class="input-registration ano" id="ano_inicio_tabela" name="ano_inicio" required>
                     <option value="">Selecione um ano</option>
                 </select>
                 <label class="label-grafico" for="ano_fim">Até:</label>
-                <select class="input-registration" id="mes_fim_tabela" name="mes_fim" required>
-                    <option>Escolha o mês</option>
-	                <option value="01">Janeiro</option>
-	                <option value="02">Fevereiro</option>
-	                <option value="03">Março</option>
-	                <option value="04">Abril</option>
-	                <option value="05">Maio</option>
-	                <option value="06">Junho</option>
-	                <option value="07">Julho</option>
-	                <option value="08">Agosto</option>
-	                <option value="09">Setembro</option>
-	                <option value="10">Outubro</option>
-	                <option value="11">Novembro</option>
-	                <option value="12">Dezembro</option>
-                </select>
+                <select class="input-registration" id="mes_fim_tabela" name="mes_fim" required></select>
                 <select class="input-registration ano" id="ano_fim_tabela" name="ano_fim" required>
                     <option value="">Selecione um ano</option>
                 </select>
@@ -111,50 +83,20 @@
                                             <button class="parcela-btn pointer" data-id-gasto="'.$idGasto.'">+</button>
                                         </td>
                                       </tr>';
-
                             }
-
                         ?>
                     </tbody>
                 </table>
             </div>
             <div class="content margin-relatorio">
                 <label class="label-grafico">De:</label>
-                    <select class="input-registration" id="mes_inicio" name="mes_inicio" required>
-                        <option>Escolha o mês</option>
-	                    <option value="01">Janeiro</option>
-	                    <option value="02">Fevereiro</option>
-	                    <option value="03">Março</option>
-	                    <option value="04">Abril</option>
-	                    <option value="05">Maio</option>
-	                    <option value="06">Junho</option>
-	                    <option value="07">Julho</option>
-	                    <option value="08">Agosto</option>
-	                    <option value="09">Setembro</option>
-	                    <option value="10">Outubro</option>
-	                    <option value="11">Novembro</option>
-	                    <option value="12">Dezembro</option>
-                    </select>
+                    <select class="input-registration" id="mes_inicio" name="mes_inicio" required></select>
                     <select class="input-registration ano" id="ano_inicio_grafico" name="ano_inicio" required>
                         <option value="">Selecione um ano</option>
                     </select>
 
                     <label class="label-grafico">Até:</label>
-                    <select class="input-registration" id="mes_fim" name="mes_fim" required>
-                        <option>Escolha o mês</option>
-	                    <option value="01">Janeiro</option>
-	                    <option value="02">Fevereiro</option>
-	                    <option value="03">Março</option>
-	                    <option value="04">Abril</option>
-	                    <option value="05">Maio</option>
-	                    <option value="06">Junho</option>
-	                    <option value="07">Julho</option>
-	                    <option value="08">Agosto</option>
-	                    <option value="09">Setembro</option>
-	                    <option value="10">Outubro</option>
-	                    <option value="11">Novembro</option>
-	                    <option value="12">Dezembro</option>
-                    </select>
+                    <select class="input-registration" id="mes_fim" name="mes_fim" required></select>
                     <select class="input-registration ano" id="ano_fim_grafico" name="ano_fim" required>
                         <option value="">Selecione um ano</option>
                     </select>
@@ -167,49 +109,7 @@
         <script>
             const labels = <?php echo json_encode($labels); ?>;
             const data = <?php echo json_encode($valores); ?>;
-            const ctx = document.getElementById('grafico1').getContext('2d');
-            const grafico = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Total de Gastos por Mês',
-                        data: data,
-                        borderWidth: 1,
-                        borderColor: '#6949ca',
-                        backgroundColor: '#6949ca',
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return 'R$ ' + value.toFixed(2).replace('.', ',');
-                                }
-                            }
-                        }
-                    }
-                }
-            });
         </script>
-        <script>
-            $(document).ready(function() {
-                var anoAtual = new Date().getFullYear();
-                $('.ano').each(function() {
-                    for (var ano = anoAtual; ano >= 2000; ano--) {
-                        $(this).append($('<option>', {
-                            value: ano,
-                            text: ano
-                        }));
-                    }
-                });
-                $('.parcela-btn').on('click', function() {
-                    var idGasto = $(this).data('id-gasto');
-                    window.location.href = 'parcela_gasto.php?idGasto=' + idGasto;
-                });
-            });
-        </script>
+        <script src="Util/JS/relatorioGasto.js"></script>
     </body>
 </html>

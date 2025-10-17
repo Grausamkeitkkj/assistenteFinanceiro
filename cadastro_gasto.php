@@ -79,51 +79,7 @@
         </main>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#valor').mask('#.##0,00', { reverse: true });
-
-                $('.form-registration').submit(function(e) { // 'e' é o objeto do evento de submit do formulário
-                    e.preventDefault();
-                
-                    var formData = $(this).serialize();
-                
-                    $.ajax({
-                        url: './ajax/salvar_gasto.php',
-                        type: 'POST',
-                        data: formData,
-                        dataType: 'json',
-                        success: function(response) { 
-                            if (response.success) {
-                                alert(response.message);
-                                $('.form-registration')[0].reset();
-                            } else {
-                                alert('Erro: ' + response.message);
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            alert('Erro na requisição AJAX.\n' +
-                                  'Status: ' + textStatus + '\n' +
-                                  'Erro: ' + errorThrown + '\n' +
-                                  'Resposta: ' + jqXHR.responseText);
-                        }
-
-                    });
-                });
-
-                $('#forma_pagamento_id').change(function() {
-                    formaPagamento = $(this).val();
-                    totalParcelas = $('#total_parcelas').val();
-                    if(formaPagamento == 3){
-                        $('#total_parcelas').val(1);
-                        $('#total_parcelas').prop('readonly', true);
-                    } else {
-                        $('#total_parcelas').prop('readonly', false);
-                        $('#total_parcelas').val(totalParcelas);
-                    }
-                });
-
-            });
-        </script>
+        <script src="Util/JS/ajaxRequest.js"></script>
+        <script src="Util/JS/cadastroGasto.js"></script>
     </body>
 </html>
