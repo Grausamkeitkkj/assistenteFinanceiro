@@ -64,4 +64,9 @@ $(document).ready(function () {
         var idGasto = $(this).data('id-gasto');
         window.location.href = 'parcela_gasto.php?idGasto=' + idGasto;
     });
+
+    $('#table-button').on('click', function () {
+        // pegar o range de data
+        dataInicio = $('')
+    })
 });

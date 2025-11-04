@@ -9,6 +9,7 @@ class Auth {
         session_regenerate_id(true);
 
         $_SESSION['idUsuario'] = $usuario->getIdUsuario();
+        $_SESSION['tempoDeSessao'] = time()+3600;
     }
 
     public static function isLoggedIn(){

@@ -16,7 +16,7 @@
                     <h2 class="title-registration">Login</h2>
                     <form class="form-registration" method="POST" action='login.php'>
                         <div class="form-group">
-                            <label class="label-login">Email/Nome de usuário:</label>
+                            <label class="label-login">Email:</label>
                             <input class="input-login" name="emailnome" type="text" required placeholder="Digite seu e-mail ou nome de usuário">
                             <label class="label-login">Senha:</label>
                             <input class="input-login" name="senha" type="password" required placeholder="Digite sua senha">
@@ -25,7 +25,7 @@
                                 <button class="submit-button-login" type="submit">Login</button>
                             </div>
                             <p class="signup-link">
-                                Não tem conta? <a href="cadastro_usuario.php">Cadastre-se aqui</a>
+                                Não possui conta? <a href="cadastro_usuario.php">Cadastre-se aqui</a>
                             </p>
                         </div>
                     </form>

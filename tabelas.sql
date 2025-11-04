@@ -16,9 +16,8 @@ CREATE TABLE IF NOT EXISTS gasto (
     categoria_id INT NOT NULL,
     forma_pagamento_id INT NOT NULL,
     total_parcelas INT DEFAULT NULL,
-    parcelas_pagas INT DEFAULT NULL,
     data_pagamento DATE DEFAULT NULL,
-    id_usuario_gasto INT NOT NULL,
+    usuario_gasto_id INT NOT NULL,
 
     FOREIGN KEY (categoria_id) REFERENCES categoria_gasto(id_categoria_gasto),
     FOREIGN KEY (forma_pagamento_id) REFERENCES forma_pagamento(id_forma_pagamento),

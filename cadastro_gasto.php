@@ -81,5 +81,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="Util/JS/ajaxRequest.js"></script>
         <script src="Util/JS/cadastroGasto.js"></script>
+        <script src="Util/JS/autoLogout.js"></script>
     </body>
 </html>

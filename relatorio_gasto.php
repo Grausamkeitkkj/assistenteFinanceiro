@@ -36,17 +36,8 @@
         </header>
         <main>
             <div class="content margin-relatorio">
-                <label class="label-grafico" for="ano_inicio">De:</label>
-                <select class="input-registration" id="mes_inicio_tabela" name="mes_inicio_tabela" required></select>
-                <select class="input-registration ano" id="ano_inicio_tabela" name="ano_inicio" required>
-                    <option value="">Selecione um ano</option>
-                </select>
-                <label class="label-grafico" for="ano_fim">Até:</label>
-                <select class="input-registration" id="mes_fim_tabela" name="mes_fim" required></select>
-                <select class="input-registration ano" id="ano_fim_tabela" name="ano_fim" required>
-                    <option value="">Selecione um ano</option>
-                </select>
-                <button class="submit-button-table" type="submit">Salvar</button>
+                <input class="input-registration" id="date_table" name="date_table" type="date">
+                <button id="table-button" class="submit-button-table" type="submit">Pesquisar</button>
                 <table class="table">
                     <thead>
                         <tr>
@@ -68,7 +59,7 @@
                                 $categoria = htmlspecialchars($gasto->getNomeCategoria());
                                 $valorFormatado = FuncoesUteis::formatarValorParaExibir($gasto->getValor());
                                 $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
-                                $parcelas = htmlspecialchars($gasto->getParcelasPagas() . '/' . $gasto->getTotalParcelas());
+                                $parcelas = htmlspecialchars('/' . $gasto->getTotalParcelas());
                                 $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
 
                                 // Linha principal
@@ -89,17 +80,8 @@
                 </table>
             </div>
             <div class="content margin-relatorio">
-                <label class="label-grafico">De:</label>
-                    <select class="input-registration" id="mes_inicio" name="mes_inicio" required></select>
-                    <select class="input-registration ano" id="ano_inicio_grafico" name="ano_inicio" required>
-                        <option value="">Selecione um ano</option>
-                    </select>
-
-                    <label class="label-grafico">Até:</label>
-                    <select class="input-registration" id="mes_fim" name="mes_fim" required></select>
-                    <select class="input-registration ano" id="ano_fim_grafico" name="ano_fim" required>
-                        <option value="">Selecione um ano</option>
-                    </select>
+            <input class="input-registration" id="data_pagamento" name="data_pagamento" type="date">
+            <button id="graphic-button" class="submit-button-table" type="submit">Salvar</button>
                 <canvas id="grafico1"></canvas>
             </div>
         </main>
@@ -111,5 +93,6 @@
             const data = <?php echo json_encode($valores); ?>;
         </script>
         <script src="Util/JS/relatorioGasto.js"></script>
+        <script src="Util/JS/autoLogout.js"></script>
     </body>
 </html>

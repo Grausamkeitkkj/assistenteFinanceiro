@@ -1,4 +1,4 @@
-function ajaxRequest(url, data, success, error, type = 'POST') {
+function ajaxRequest(url, data = {}, success = function () { }, error = function () { }, type = 'POST') {
     $.ajax({
         url: url,         // Endereço do arquivo PHP ou endpoint
         type: type,       // Método HTTP (POST, GET, etc.)

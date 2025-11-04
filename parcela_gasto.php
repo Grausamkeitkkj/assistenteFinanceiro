@@ -103,4 +103,5 @@
         </div>
     <script src="Util/JS/funcoesUteis.js"></script>
     <script src="Util/JS/parcelaGasto.js"></script>
+    <script src="Util/JS/autoLogout.js"></script>
 </html>
