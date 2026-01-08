@@ -17,8 +17,13 @@
     
     $gastoArray = $gastoPesquisa->getGasto($_SESSION['idUsuario']);
 
-    $GastoporMes = $gastoPesquisa->getGastoAgrupadoPorMesAno($_SESSION['idUsuario']);
-    $labels = array_column($GastoporMes, 'mes_ano_label');// extrai da array os valores da coluna 'mes_ano_label'
+    $GastoporMes = $gastoPesquisa->getParcelaAgrupadoPorMesAno($_SESSION['idUsuario']);
+    
+    $labels = [];
+    foreach ($GastoporMes as $item) {
+        $labels[] = FuncoesUteis::traduzirMesAno($item['mes_ano_label']);
+    }
+    
     $valores = array_column($GastoporMes, 'total_valor');
 ?>
 
@@ -54,12 +59,13 @@
                         <?php
                             foreach ($gastoArray as $index => $gasto) {
                                 $idGasto = $gasto->getIdGasto();
+                                $contagemParcelasPagas = $gasto->getContagemParcelasPagas();
                                 $dataPagamento = $gasto->getDataPagamento();
                                 $produto = htmlspecialchars($gasto->getProduto());
                                 $categoria = htmlspecialchars($gasto->getNomeCategoria());
                                 $valorFormatado = FuncoesUteis::formatarValorParaExibir($gasto->getValor());
                                 $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
-                                $parcelas = htmlspecialchars('/' . $gasto->getTotalParcelas());
+                                $parcelas = htmlspecialchars($contagemParcelasPagas.'/' . $gasto->getTotalParcelas());
                                 $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
 
                                 // Linha principal
@@ -81,13 +87,13 @@
             </div>
             <div class="content margin-relatorio">
             <input class="input-registration" id="data_pagamento" name="data_pagamento" type="date">
-            <button id="graphic-button" class="submit-button-table" type="submit">Salvar</button>
+            <button id="graphic-button" class="submit-button-table" type="submit">Pesquisar</button>
                 <canvas id="grafico1"></canvas>
             </div>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script>
             const labels = <?php echo json_encode($labels); ?>;
             const data = <?php echo json_encode($valores); ?>;

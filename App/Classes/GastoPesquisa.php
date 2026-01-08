@@ -15,11 +15,14 @@ class GastoPesquisa {
         $sql = "SELECT 
                     a.*, 
                     b.nome_categoria_gasto, 
-                    c.nome_forma_pagamento
+                    c.nome_forma_pagamento,
+                    count(d.data_pagamento) as contagem_parcelas_pagas
                 FROM gasto a
                 JOIN categoria_gasto b ON a.categoria_id = b.id_categoria_gasto
                 JOIN forma_pagamento c ON a.forma_pagamento_id = c.id_forma_pagamento
-                WHERE a.id_usuario_gasto = :id_usuario_gasto";
+                JOIN parcela d ON a.id_gasto = d.gasto_id
+                WHERE a.id_usuario_gasto = :id_usuario_gasto
+                GROUP BY a.id_gasto";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
@@ -38,7 +41,8 @@ class GastoPesquisa {
                 $row['parcelas_pagas'],
                 $row['total_parcelas'],
                 $row['data_pagamento'],
-                $row['id_usuario_gasto']
+                $row['id_usuario_gasto'],
+                $row['contagem_parcelas_pagas']
             );
         }
         return $gastos;
@@ -65,18 +69,17 @@ class GastoPesquisa {
         } else {
             return false;
         }
-
     }
     
-    public function getGastoAgrupadoPorMesAno($idUsuario){
-        $sql = "SELECT 
-                    DATE_FORMAT(a.data_pagamento, '%Y-%m') AS mes_ano,
-                    DATE_FORMAT(a.data_pagamento, '%M %Y') AS mes_ano_label,
-                    SUM(a.valor) AS total_valor
-                FROM gasto a
-                WHERE a.id_usuario_gasto=:id_usuario_gasto
-                GROUP BY mes_ano
-                ORDER BY mes_ano DESC
+    public function getParcelaAgrupadoPorMesAno($idUsuario){
+        $sql = "SELECT a.*,
+                    sum(a.valor) as total_valor,
+                    DATE_FORMAT(a.vencimento, '%Y-%m') AS mes_ano, 
+                    DATE_FORMAT(a.vencimento, '%M %Y') AS mes_ano_label 
+                    FROM parcela as a
+                    JOIN gasto b on a.gasto_id = b.id_gasto
+                    WHERE b.id_usuario_gasto=:id_usuario_gasto
+                    GROUP BY mes_ano
                 ";
 
         $stmt = $this->pdo->prepare($sql);
