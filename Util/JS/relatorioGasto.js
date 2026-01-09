@@ -39,7 +39,7 @@ $(document).ready(function () {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Total de Gastos por Mês',
+                label: 'Total de Gastos por Mês(Projeção)',
                 data: data,
                 borderWidth: 1,
                 borderColor: '#6949ca',
@@ -68,5 +68,35 @@ $(document).ready(function () {
     $('#table-button').on('click', function () {
         // pegar o range de data
         dataInicio = $('')
+    })
+
+    $('#graphic-button').on('click', function (e) {
+        const dataVencimento = $("#data_vencimento").val();
+
+        if (!dataVencimento) {
+            alert('Por favor, selecione uma data.');
+            return;
+        }
+
+        $.ajax({
+            url: 'ajax/atualizar_grafico_gastos.php',
+            method: 'POST',
+            data: { data_vencimento: dataVencimento },
+            success: function (response) {
+                if (response.success) {
+                    // Atualiza os dados do gráfico
+                    grafico.data.labels = response.labels;
+                    grafico.data.datasets[0].data = response.data;
+                    grafico.update();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Erro na requisição: ' + xhr.responseText);
+                console.error('Erro:', error);
+                console.log('Resposta:', xhr.responseText);
+            }
+        });
     })
 });

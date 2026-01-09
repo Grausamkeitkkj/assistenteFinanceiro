@@ -82,4 +82,33 @@ class ParcelaPesquisa {
             return $stmt->execute();
         }
     }
+
+    
+    public function getParcelaAgrupadoPorMesAnoPorData($idUsuario, $vencimento){
+        $sql = "SELECT a.*,
+                    sum(a.valor) as total_valor,
+                    DATE_FORMAT(a.vencimento, '%Y-%m') AS mes_ano, 
+                    DATE_FORMAT(a.vencimento, '%M %Y') AS mes_ano_label 
+                    FROM parcela as a
+                    JOIN gasto b on a.gasto_id = b.id_gasto
+                    WHERE b.id_usuario_gasto=:id_usuario_gasto
+                    AND a.vencimento = :vencimento
+                    GROUP BY mes_ano
+                ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
+        $stmt->bindValue(':vencimento', $vencimento, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $resultado = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $resultado[] = [
+                'mes_ano' => $row['mes_ano'],
+                'mes_ano_label' => $row['mes_ano_label'],
+                'total_valor' => $row['total_valor']
+            ];
+        }
+        return $resultado;
+    }
 } 
