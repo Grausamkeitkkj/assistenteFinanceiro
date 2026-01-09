@@ -48,6 +48,33 @@ class GastoPesquisa {
         return $gastos;
     }
 
+    public function getGastoPorData(int $idUsuario, $vencimentoInicio, $vencimentoFim) {
+        $sql = "SELECT 
+                    a.*, 
+                    b.nome_categoria_gasto, 
+                    c.nome_forma_pagamento,
+                    count(d.data_pagamento) as contagem_parcelas_pagas
+                FROM gasto a
+                JOIN categoria_gasto b ON a.categoria_id = b.id_categoria_gasto
+                JOIN forma_pagamento c ON a.forma_pagamento_id = c.id_forma_pagamento
+                JOIN parcela d ON a.id_gasto = d.gasto_id
+                WHERE a.id_usuario_gasto = :id_usuario_gasto
+                AND DATE_FORMAT(d.vencimento, '%Y-%m') BETWEEN :vencimentoInicio AND :vencimentoFim
+                GROUP BY a.id_gasto";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
+        $stmt->bindValue(':vencimentoInicio', $vencimentoInicio, PDO::PARAM_STR);
+        $stmt->bindValue(':vencimentoFim', $vencimentoFim, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $gastos = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $gastos[] = $row;
+        }
+        return $gastos;
+    }
+
     public function insertGasto(Gasto $gasto) {
        $sql = "INSERT INTO gasto 
           (produto, categoria_id, valor, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento, id_usuario_gasto)

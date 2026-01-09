@@ -71,8 +71,8 @@ $(document).ready(function () {
     })
 
     $('#graphic-button').on('click', function (e) {
-        const dataVencimentoIncio = $("#data_vencimento_inicio").val();
-        const dataVencimentoFim = $("#data_vencimento_fim").val();
+        const dataVencimentoIncio = $("#data_vencimento_inicio_grafico").val();
+        const dataVencimentoFim = $("#data_vencimento_fim_grafico").val();
 
         if (!dataVencimentoIncio) {
             alert('Por favor, selecione uma data.');
@@ -83,8 +83,8 @@ $(document).ready(function () {
             url: 'ajax/atualizar_grafico_gastos.php',
             method: 'POST',
             data: {
-                data_vencimento_inicio: dataVencimentoIncio,
-                data_vencimento_fim: dataVencimentoFim
+                data_vencimento_inicio_grafico: dataVencimentoIncio,
+                data_vencimento_fim_grafico: dataVencimentoFim
             },
             success: function (response) {
                 if (response.success) {
@@ -92,6 +92,61 @@ $(document).ready(function () {
                     grafico.data.labels = response.labels;
                     grafico.data.datasets[0].data = response.data;
                     grafico.update();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Erro na requisição: ' + xhr.responseText);
+                console.error('Erro:', error);
+                console.log('Resposta:', xhr.responseText);
+            }
+        });
+    })
+
+    $('#table-button').on('click', function (e) {
+        const dataVencimentoIncio = $("#data_vencimento_inicio_tabela").val();
+        const dataVencimentoFim = $("#data_vencimento_fim_tabela").val();
+
+        if (!dataVencimentoIncio) {
+            alert('Por favor, selecione uma data.');
+            return;
+        }
+
+        $.ajax({
+            url: 'ajax/atualizar_tabela_gastos.php',
+            method: 'POST',
+            data: {
+                data_vencimento_inicio_tabela: dataVencimentoIncio,
+                data_vencimento_fim_tabela: dataVencimentoFim
+            },
+            success: function (response) {
+                if (response.success) {
+                    const tbody = $(".tabela-gasto tbody");
+                    tbody.empty();
+                    response.retorno.forEach(item => {
+                        const dataFormatada = item.data_pagamento ? item.data_pagamento.split('-').reverse().join('/') : 'Sem data';
+                        const linha = `
+                            <tr>
+                                <td>${item.produto}</td>
+                                <td>${item.nome_categoria_gasto}</td>
+                                <td>R$ ${parseFloat(item.valor).toFixed(2).replace('.', ',')}</td>
+                                <td>${item.nome_forma_pagamento}</td>
+                                <td>${item.contagem_parcelas_pagas}/${item.total_parcelas}</td>
+                                <td>${dataFormatada}</td>
+                                <td>
+                                    <button class="parcela-btn pointer" data-id-gasto="${item.id_gasto}">+</button>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.append(linha);
+                    });
+
+                    // Reatribui o evento de click
+                    $('.parcela-btn').on('click', function () {
+                        var idGasto = $(this).data('id-gasto');
+                        window.location.href = 'parcela_gasto.php?idGasto=' + idGasto;
+                    });
                 } else {
                     alert(response.message);
                 }

@@ -2,12 +2,12 @@
     require_once __DIR__ . '/../vendor/autoload.php';
 
     use App\Classes\Conexao;
-    use App\Classes\ParcelaPesquisa;
+    use App\Classes\GastoPesquisa;
     use Util\PHP\FuncoesUteis;
     use App\Classes\Auth;
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
-    $parcelaPesquisa = new ParcelaPesquisa($pdo);
+    $gastoPesquisa = new GastoPesquisa($pdo);
     Auth::requireLogin();
     header('Content-Type: application/json');
 
@@ -17,8 +17,8 @@
     }
 
     $idUsuario = $_SESSION['idUsuario'] ?? null;
-    $vencimentoInicio = $_POST['data_vencimento_inicio_grafico'] ?? null;
-    $vencimentoFim = $_POST['data_vencimento_fim_grafico'] ?? null;
+    $vencimentoInicio = $_POST['data_vencimento_inicio_tabela'] ?? null;
+    $vencimentoFim = $_POST['data_vencimento_fim_tabela'] ?? null;
 
     if(!$idUsuario || !$vencimentoInicio || !$vencimentoFim){
         echo json_encode(['success' => false, 'message' => 'Dados inválidos. Selecione as datas de início e fim.']);
@@ -26,19 +26,12 @@
     }
 
     try {
-        $retorno = $parcelaPesquisa->getParcelaAgrupadoPorMesAnoPorData($idUsuario, $vencimentoInicio, $vencimentoFim);
-
-        $labels = [];
-        $valores = array_column($retorno, 'total_valor');
-        foreach ($retorno as $item) {
-            $labels[] = FuncoesUteis::traduzirMesAno($item['mes_ano_label']);
-        }
+        $retorno = $gastoPesquisa->getGastoPorData($idUsuario, $vencimentoInicio, $vencimentoFim);
 
         if(!empty($retorno)) {
             echo json_encode([
                 'success' => true,
-                'labels' =>$labels,
-                'data' => $valores
+                'retorno' =>$retorno
             ]);
         } else {
             echo json_encode([

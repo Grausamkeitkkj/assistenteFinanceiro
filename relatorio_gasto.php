@@ -41,9 +41,10 @@
         </header>
         <main>
             <div class="content margin-relatorio">
-                <input class="input-registration" id="date_table" name="date_table" type="date">
+                <input class="input-registration" id="data_vencimento_inicio_tabela" name="data_vencimento_inicio_tabela" type="month">
+                <input class="input-registration" id="data_vencimento_fim_tabela" name="data_vencimento_fim_tabela" type="month">
                 <button id="table-button" class="submit-button-table" type="submit">Pesquisar</button>
-                <table class="table">
+                <table class="table tabela-gasto">
                     <thead>
                         <tr>
                             <th>Produto</th>
@@ -86,8 +87,8 @@
                 </table>
             </div>
             <div class="content margin-relatorio">
-            <input class="input-registration" id="data_vencimento_inicio" name="data_vencimento_inicio" type="month">
-            <input class="input-registration" id="data_vencimento_fim" name="data_vencimento_fim" type="month">
+            <input class="input-registration" id="data_vencimento_inicio_grafico" name="data_vencimento_inicio_grafico" type="month">
+            <input class="input-registration" id="data_vencimento_fim_grafico" name="data_vencimento_fim_grafico" type="month">
             <button id="graphic-button" class="submit-button-table" type="submit">Pesquisar</button>
                 <canvas id="grafico1"></canvas>
             </div>
