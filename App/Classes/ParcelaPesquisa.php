@@ -92,7 +92,7 @@ class ParcelaPesquisa {
                     FROM parcela as a
                     JOIN gasto b on a.gasto_id = b.id_gasto
                     WHERE b.id_usuario_gasto=:id_usuario_gasto
-                    AND a.vencimento = :vencimento
+                    AND DATE_FORMAT(a.vencimento, '%Y-%m') = :vencimento
                     GROUP BY mes_ano
                 ";
 
