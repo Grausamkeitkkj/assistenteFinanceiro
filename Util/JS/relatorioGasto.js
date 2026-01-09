@@ -71,9 +71,10 @@ $(document).ready(function () {
     })
 
     $('#graphic-button').on('click', function (e) {
-        const dataVencimento = $("#data_vencimento").val();
+        const dataVencimentoIncio = $("#data_vencimento_inicio").val();
+        const dataVencimentoFim = $("#data_vencimento_fim").val();
 
-        if (!dataVencimento) {
+        if (!dataVencimentoIncio) {
             alert('Por favor, selecione uma data.');
             return;
         }
@@ -81,7 +82,10 @@ $(document).ready(function () {
         $.ajax({
             url: 'ajax/atualizar_grafico_gastos.php',
             method: 'POST',
-            data: { data_vencimento: dataVencimento },
+            data: {
+                data_vencimento_inicio: dataVencimentoIncio,
+                data_vencimento_fim: dataVencimentoFim
+            },
             success: function (response) {
                 if (response.success) {
                     // Atualiza os dados do gráfico

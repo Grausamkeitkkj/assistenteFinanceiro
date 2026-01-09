@@ -86,7 +86,8 @@
                 </table>
             </div>
             <div class="content margin-relatorio">
-            <input class="input-registration" id="data_vencimento" name="data_vencimento" type="month">
+            <input class="input-registration" id="data_vencimento_inicio" name="data_vencimento_inicio" type="month">
+            <input class="input-registration" id="data_vencimento_fim" name="data_vencimento_fim" type="month">
             <button id="graphic-button" class="submit-button-table" type="submit">Pesquisar</button>
                 <canvas id="grafico1"></canvas>
             </div>

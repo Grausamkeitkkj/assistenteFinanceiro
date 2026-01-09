@@ -17,15 +17,16 @@
     }
 
     $idUsuario = $_SESSION['idUsuario'] ?? null;
-    $vencimento = $_POST['data_vencimento'] ?? null;
+    $vencimentoInicio = $_POST['data_vencimento_inicio'] ?? null;
+    $vencimentoFim = $_POST['data_vencimento_fim'] ?? null;
 
-    if(!$idUsuario || !$vencimento){
-        echo json_encode(['success' => false, 'message' => 'Dados inválidos.']);
+    if(!$idUsuario || !$vencimentoInicio || !$vencimentoFim){
+        echo json_encode(['success' => false, 'message' => 'Dados inválidos. Selecione as datas de início e fim.']);
         exit;
     }
 
     try {
-        $retorno = $parcelaPesquisa->getParcelaAgrupadoPorMesAnoPorData($idUsuario, $vencimento);
+        $retorno = $parcelaPesquisa->getParcelaAgrupadoPorMesAnoPorData($idUsuario, $vencimentoInicio, $vencimentoFim);
 
         $labels = [];
         $valores = array_column($retorno, 'total_valor');

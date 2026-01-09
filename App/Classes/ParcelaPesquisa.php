@@ -84,7 +84,7 @@ class ParcelaPesquisa {
     }
 
     
-    public function getParcelaAgrupadoPorMesAnoPorData($idUsuario, $vencimento){
+    public function getParcelaAgrupadoPorMesAnoPorData($idUsuario, $vencimentoInicio, $vencimentoFim){
         $sql = "SELECT a.*,
                     sum(a.valor) as total_valor,
                     DATE_FORMAT(a.vencimento, '%Y-%m') AS mes_ano, 
@@ -92,13 +92,14 @@ class ParcelaPesquisa {
                     FROM parcela as a
                     JOIN gasto b on a.gasto_id = b.id_gasto
                     WHERE b.id_usuario_gasto=:id_usuario_gasto
-                    AND DATE_FORMAT(a.vencimento, '%Y-%m') = :vencimento
+                    AND DATE_FORMAT(a.vencimento, '%Y-%m') BETWEEN :vencimentoInicio AND :vencimentoFim
                     GROUP BY mes_ano
                 ";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
-        $stmt->bindValue(':vencimento', $vencimento, PDO::PARAM_STR);
+        $stmt->bindValue(':vencimentoInicio', $vencimentoInicio, PDO::PARAM_STR);
+        $stmt->bindValue(':vencimentoFim', $vencimentoFim, PDO::PARAM_STR);
         $stmt->execute();
 
         $resultado = [];
