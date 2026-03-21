@@ -246,6 +246,19 @@ table {
     margin-left: 10vw;
 }
 
+.container-senha {
+    position: relative;
+    width: 100%;
+}
+
+.icone-senha {
+    position: absolute;
+    width: 30px;
+    height: auto;
+    right: 5px;
+    cursor: pointer;
+    transform: translateY(10%);
+}
 
 .input-login {
     padding: 10px;
