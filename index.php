@@ -14,14 +14,14 @@
         <main>
             <div class="content-centralize">
                 <div class="content-login">
-                    <h2 class="title-registration">Login</h2>
+                    <h2 class="title-registration">Assistente Financeiro</h2>
                     <form class="form-registration" method="POST" action='login.php'>
                         <div class="form-group">
                             <label class="label-login">Email:</label>
                             <input class="input-login" name="emailnome" type="text" required placeholder="Digite seu e-mail ou nome de usuário">
                             <label class="label-login">Senha:</label>
                             <div class="container-senha">
-                                <input class="input-login" id="senha" name="senha" type="password" required placeholder="Digite sua senha">
+                                <input class="input-login-senha" id="senha" name="senha" type="password" required placeholder="Digite sua senha">
                                 <img id="imgToggleSenha" class="icone-senha" src="./icon/pass-on.svg">
                             </div>
                             <a href="#" class="forgot-password">Esqueceu a senha?</a>

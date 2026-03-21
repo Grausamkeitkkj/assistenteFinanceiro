@@ -199,9 +199,9 @@ table {
 }
 
 .title-registration {
-    font-size: 16px;
+    font-size: 25px;
     color: #444;
-    margin-bottom: 10px;
+    margin-bottom: 35px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     text-align: center;
@@ -255,18 +255,30 @@ table {
     position: absolute;
     width: 30px;
     height: auto;
-    right: 5px;
+    right: 8px;
     cursor: pointer;
-    transform: translateY(10%);
+    transform: translateY(25%);
 }
 
 .input-login {
-    padding: 10px;
+    padding: 15px;
     border: 0.5px solid #6949ca;
     border-radius: 4px;
     background-color: transparent;
     outline: none;
-    margin-bottom: 2vh;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-login-senha {
+    padding: 15px;
+    padding-right: 45px;
+    border: 0.5px solid #6949ca;
+    border-radius: 4px;
+    background-color: transparent;
+    outline: none;
+    margin-bottom: 15px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -277,9 +289,15 @@ table {
     box-shadow: 0 0 5px rgba(105, 73, 202, 0.4);
 }
 
+.input-login-senha:focus {
+    outline: none;
+    border: 2px solid #6949ca;
+    box-shadow: 0 0 5px rgba(105, 73, 202, 0.4);
+}
+
 .label-login {
-    text-align: center;
-    margin-bottom: 5px;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
 .content-login {
@@ -288,13 +306,18 @@ table {
     padding: 30px;
     /* Topo | Direita | Baixo | Esquerda */
     margin: 20px;
-    width: 25vw;
-    height: 35vh;
+    width: 30vw;
+    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     transition: width 0.3s ease;
+}
+
+.signup-link {
+    margin-top: 50px;
+    text-align: center;
 }
 
 a.forgot-password {
@@ -327,7 +350,7 @@ a.forgot-password:hover {
 
 .submit-button-login {
     width: 100%;
-    padding: 15px 20px;
+    padding: 17px 20px;
     font-size: 15px;
     background-color: #6949ca;
     color: #fff;
