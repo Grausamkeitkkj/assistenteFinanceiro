@@ -87,7 +87,7 @@ table {
     background: rgba(255, 255, 255, 0.2);
 }
 
-.menu .dropdown:hover .submenu {
+.menu .dropdown.active .submenu {
     display: flex;
 }
 

@@ -13,3 +13,16 @@
     </li>
     <a href="logout.php">Logout</a>
 </ul>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $('.menu .dropdown > a').on('click', function(e){
+            var $parentLi = $(this).parent();
+
+            if ($(this).attr('href') === '#') {
+                e.preventDefault();
+            }
+            $('.menu .dropdown').not($parentLi).removeClass("active");
+            $parentLi.toggleClass('active');
+        })
+    });
+</script>
