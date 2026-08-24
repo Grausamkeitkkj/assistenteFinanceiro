@@ -8,6 +8,7 @@ use App\Classes\Parcela;
 use App\Classes\ParcelaPesquisa;
 use App\Classes\ParcelaFuncoes;
 use App\Classes\Auth;
+use App\Classes\AuthCSFR;
 Auth::requireLogin();
 
 
@@ -16,7 +17,7 @@ $pdo = $conexao->getPdo();
 $gastoPesquisa = new GastoPesquisa($pdo);
 $parcelaPesquisa = new ParcelaPesquisa($pdo);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && AuthCSFR::autenticacaoCSFR()) {
     // '??' -> Verifica se existe, se não existir atribui o valor após '??'
     // !== '' -> Verifica se o valor não é uma string vazia
     // : null -> Se for string vazia atribui null

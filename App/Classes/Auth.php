@@ -10,6 +10,9 @@ class Auth {
 
         $_SESSION['idUsuario'] = $usuario->getIdUsuario();
         $_SESSION['tempoDeSessao'] = time()+3600;
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
     }
 
     public static function isLoggedIn(){
