@@ -21,7 +21,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $usuario = new Usuario(null, $email, $nome, $senha);
     $usuarioPesquisa = new UsuarioPesquisa($pdo);
-    $usuarioPesquisa->setUsuario($usuario);
+    try{
+        $usuarioPesquisa->setUsuario($usuario);
+    }catch(PDOException $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Erro: ' . $e->getMessage()
+        ]);
+    }
+    
 
     header('Location: index.php');
     exit();
