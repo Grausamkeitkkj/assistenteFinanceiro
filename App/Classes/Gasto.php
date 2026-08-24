@@ -11,13 +11,12 @@ class Gasto {
     private $valor;
     private $forma_pagamento_id;
     private $nome_forma_pagamento; // vem da outra tabela
-    private $parcelas_pagas;
     private $total_parcelas;
     private $data_pagamento;
     private $id_usuario_gasto;
     private $contagem_parcelas_pagas;
 
-    public function __construct($id_gasto, $produto, $categoria_id, $nome_categoria, $valor, $forma_pagamento_id, $nome_forma_pagamento, $parcelas_pagas, $total_parcelas, $data_pagamento, $id_usuario_gasto, $contagem_parcelas_pagas) {
+    public function __construct($id_gasto, $produto, $categoria_id, $nome_categoria, $valor, $forma_pagamento_id, $nome_forma_pagamento, $total_parcelas, $data_pagamento, $id_usuario_gasto, $contagem_parcelas_pagas) {
         $this->id_gasto = $id_gasto;
         $this->produto = $produto;
         $this->categoria_id = $categoria_id;
@@ -25,7 +24,6 @@ class Gasto {
         $this->valor = $valor;
         $this->forma_pagamento_id = $forma_pagamento_id;
         $this->nome_forma_pagamento = $nome_forma_pagamento;
-        $this->parcelas_pagas = $parcelas_pagas;
         $this->total_parcelas = $total_parcelas;
         $this->data_pagamento = $data_pagamento;
         $this->id_usuario_gasto = $id_usuario_gasto;
@@ -58,10 +56,6 @@ class Gasto {
 
     public function getNomeFormaPagamento() {
         return $this->nome_forma_pagamento;
-    }
-
-    public function getParcelasPagas() {
-        return $this->parcelas_pagas;
     }
 
     public function getTotalParcelas() {

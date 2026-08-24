@@ -38,7 +38,6 @@ class GastoPesquisa {
                 $row['valor'],
                 $row['forma_pagamento_id'],
                 $row['nome_forma_pagamento'],
-                $row['parcelas_pagas'],
                 $row['total_parcelas'],
                 $row['data_pagamento'],
                 $row['id_usuario_gasto'],
@@ -77,16 +76,15 @@ class GastoPesquisa {
 
     public function insertGasto(Gasto $gasto) {
        $sql = "INSERT INTO gasto 
-          (produto, categoria_id, valor, forma_pagamento_id, parcelas_pagas, total_parcelas, data_pagamento, id_usuario_gasto)
+          (produto, categoria_id, valor, forma_pagamento_id, total_parcelas, data_pagamento, id_usuario_gasto)
           VALUES 
-          (:produto, :categoria_id, :valor, :forma_pagamento_id, :parcelas_pagas, :total_parcelas, :data_pagamento, :id_usuario_gasto)";
+          (:produto, :categoria_id, :valor, :forma_pagamento_id,, :total_parcelas, :data_pagamento, :id_usuario_gasto)";
     
        $stmt = $this->pdo->prepare($sql);
        $stmt->bindValue(':produto', $gasto->getProduto());
        $stmt->bindValue(':categoria_id', $gasto->getCategoriaId(), PDO::PARAM_INT);
        $stmt->bindValue(':valor', $gasto->getValor());
        $stmt->bindValue(':forma_pagamento_id', $gasto->getFormaPagamentoId(), PDO::PARAM_INT);
-       $stmt->bindValue(':parcelas_pagas', $gasto->getParcelasPagas(), PDO::PARAM_INT);
        $stmt->bindValue(':total_parcelas', $gasto->getTotalParcelas(), PDO::PARAM_INT);
        $stmt->bindValue(':data_pagamento', $gasto->getDataPagamento());
        $stmt->bindValue(':id_usuario_gasto', $gasto->getIdUsuarioGasto());

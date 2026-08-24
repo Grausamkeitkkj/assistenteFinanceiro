@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && AuthCSFR::autenticacaoCSFR()) {
     $categoria_id = ($_POST['categoria_id'] ?? '') !== '' ? (int)$_POST['categoria_id'] : null;
     $valor = ($_POST['valor'] ?? '') !== '' ? $_POST['valor'] : null;
     $forma_pagamento_id = ($_POST['forma_pagamento_id'] ?? '') !== '' ? (int)$_POST['forma_pagamento_id'] : null;
-    $parcelas_pagas = ($_POST['parcelas_pagas'] ?? '') !== '' ? (int)$_POST['parcelas_pagas'] : null;
     $total_parcelas = ($_POST['total_parcelas'] ?? '') !== '' ? (int)$_POST['total_parcelas'] : null;
     $data_pagamento = ($_POST['data_pagamento'] ?? '') !== '' ? $_POST['data_pagamento'] : null;
     $id_usuario_gasto = $_SESSION['idUsuario'];
@@ -37,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && AuthCSFR::autenticacaoCSFR()) {
 
     $valor = str_replace(['.', ','], ['', '.'], $valor);
 
-    $gasto = new Gasto(null, $produto, $categoria_id, null, $valor, $forma_pagamento_id, null, $parcelas_pagas, $total_parcelas, $data_pagamento, $id_usuario_gasto);
+    $gasto = new Gasto(null, $produto, $categoria_id, null, $valor, $forma_pagamento_id, null, $total_parcelas, $data_pagamento, $id_usuario_gasto);
 
     try {
         $idGasto = $gastoPesquisa->insertGasto($gasto); // Agora captura o ID
