@@ -8,14 +8,16 @@ class Parcela {
     private $valor;
     private $vencimento;
     private $data_pagamento;
+    private $usuario_parcela_id;
 
-    public function __construct($id_parcela, $gasto_id, $numero_parcela, $valor, $vencimento, $data_pagamento) {
+    public function __construct($id_parcela, $gasto_id, $numero_parcela, $valor, $vencimento, $data_pagamento, $usuario_parcela_id) {
         $this->id_parcela = $id_parcela;
         $this->gasto_id = $gasto_id;
         $this->numero_parcela = $numero_parcela;
         $this->valor = $valor;
         $this->vencimento = $vencimento;
         $this->data_pagamento = $data_pagamento;
+        $this->usuario_parcela_id = $usuario_parcela_id;
     }
 
     public function getIdParcela() {
@@ -40,5 +42,8 @@ class Parcela {
 
     public function getDataPagamento() {
         return $this->data_pagamento;
+    }
+    public function getUsuarioParcelaId() {
+        return $this->usuario_parcela_id;
     }
 }

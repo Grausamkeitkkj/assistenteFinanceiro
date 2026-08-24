@@ -18,7 +18,8 @@ class ParcelaFuncoes{
                 $i,
                 $valorParcela,
                 $vencimento,
-                null
+                null,
+                $_SESSION['idUsuario']
             );
             $vencimento = date('Y-m-d', strtotime("+$i month", strtotime($data_pagamento))); 
         }   

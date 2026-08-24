@@ -29,7 +29,8 @@ class ParcelaPesquisa {
                 $row['numero_parcela'],
                 $row['valor'],
                 $row['vencimento'],
-                $row['data_pagamento']
+                $row['data_pagamento'],
+                $row['usuario_parcela_id']
             );
         }
         return $parcelas;
@@ -37,9 +38,9 @@ class ParcelaPesquisa {
 
     public function insertParcela(Parcela $parcela) {
         $sql = "INSERT INTO parcela 
-                (gasto_id, numero_parcela, valor, vencimento, data_pagamento)
+                (gasto_id, numero_parcela, valor, vencimento, data_pagamento, usuario_parcela_id)
                 VALUES 
-                (:gasto_id, :numero_parcela, :valor, :vencimento, :data_pagamento)";
+                (:gasto_id, :numero_parcela, :valor, :vencimento, :data_pagamento, :usuario_parcela_id)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':gasto_id', $parcela->getGastoId(), PDO::PARAM_INT);
@@ -47,6 +48,7 @@ class ParcelaPesquisa {
         $stmt->bindValue(':valor', $parcela->getValor());
         $stmt->bindValue(':vencimento', $parcela->getVencimento());
         $stmt->bindValue(':data_pagamento', $parcela->getDataPagamento());
+        $stmt->bindValue(':usuario_parcela_id', $parcela->getUsuarioParcelaId());
 
         return $stmt->execute();
     }
@@ -54,10 +56,13 @@ class ParcelaPesquisa {
     public function quitarParcela($idParcela) {
         $sql = "UPDATE parcela 
                 SET data_pagamento = CURRENT_DATE 
-                WHERE id_parcela = :id_parcela";
+                WHERE id_parcela = :id_parcela
+                AND usuario_parcela_id = : usuario_parcela_id";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id_parcela', $idParcela, PDO::PARAM_INT);
+        $stmt->bindValue(':usuario_parcela_id', $_SESSION['idUsuario']);
+
         $stmt->execute();
 
         // Retorna a data atual no formato YYYY-MM-DD
@@ -68,17 +73,21 @@ class ParcelaPesquisa {
         if(!empty($dataPagamento)){
             $sql = "UPDATE parcela
                     SET data_pagamento = :data_pagamento
-                    WHERE id_parcela = :id_parcela";
+                    WHERE id_parcela = :id_parcela
+                    AND usuario_parcela_id = : usuario_parcela_id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':data_pagamento', $dataPagamento);
             $stmt->bindValue(':id_parcela', $idParcela, PDO::PARAM_INT);
+            $stmt->bindValue(':usuario_parcela_id', $_SESSION['idUsuario']);
             return $stmt->execute();
         } else {
             $sql = "UPDATE parcela
                     SET data_pagamento = NULL
-                    WHERE id_parcela = :id_parcela";
+                    WHERE id_parcela = :id_parcela
+                    AND usuario_parcela_id = : usuario_parcela_id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':id_parcela', $idParcela, PDO::PARAM_INT);
+            $stmt->bindValue(':usuario_parcela_id', $_SESSION['idUsuario']);
             return $stmt->execute();
         }
     }

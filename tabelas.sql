@@ -31,8 +31,10 @@ CREATE TABLE IF NOT EXISTS parcela (
     valor DECIMAL(10,2) NOT NULL,
     vencimento DATE NOT NULL,
     data_pagamento DATE DEFAULT NULL,
+    usuario_parcela_id INT NOT NULL
     
-    FOREIGN KEY (gasto_id) REFERENCES gasto(id_gasto)
+    FOREIGN KEY (gasto_id) REFERENCES gasto(id_gasto),
+    FOREIGN KEY (usuario_parcela_id) REFERENCES usuario(id_usuario)
 );
 
 CREATE TABLE IF NOT EXISTS usuario(
