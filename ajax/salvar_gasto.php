@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && AuthCSFR::autenticacaoCSFR()) {
 
     $valor = str_replace(['.', ','], ['', '.'], $valor);
 
-    $gasto = new Gasto(null, $produto, $categoria_id, null, $valor, $forma_pagamento_id, null, $total_parcelas, $data_pagamento, $id_usuario_gasto);
+    $gasto = new Gasto(null, $produto, $categoria_id, null, $valor, $forma_pagamento_id, null, $total_parcelas, $data_pagamento, $id_usuario_gasto, null);
 
     try {
         $idGasto = $gastoPesquisa->insertGasto($gasto); // Agora captura o ID
