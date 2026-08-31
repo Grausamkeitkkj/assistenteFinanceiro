@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Classes\Conexao;
-use App\Classes\Usuario;
-use App\Classes\UsuarioPesquisa;
+use App\Classes\Conexao\Conexao;
+use App\Classes\Usuario\Usuario;
+use App\Classes\Usuario\UsuarioPesquisa;
 
 $conexao = new Conexao();
 $pdo = $conexao->getPdo();

@@ -1,14 +1,13 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Classes\Conexao;
-use App\Classes\Gasto;
-use App\Classes\GastoPesquisa;
-use App\Classes\Parcela;
-use App\Classes\ParcelaPesquisa;
-use App\Classes\ParcelaFuncoes;
-use App\Classes\Auth;
-use App\Classes\AuthCSFR;
+use App\Classes\Conexao\Conexao;
+use App\Classes\Gasto\Gasto;
+use App\Classes\Gasto\GastoPesquisa;
+use App\Classes\Parcela\ParcelaPesquisa;
+use App\Classes\Parcela\ParcelaFuncoes;
+use App\Classes\Auth\Auth;
+use App\Classes\Auth\AuthCSFR;
 Auth::requireLogin();
 
 

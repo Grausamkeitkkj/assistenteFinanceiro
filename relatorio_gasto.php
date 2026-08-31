@@ -1,11 +1,9 @@
 <?php
     require_once __DIR__ . '/vendor/autoload.php';
 
-    use App\Classes\Conexao;
-    use App\Classes\Gasto;
-    use App\Classes\GastoPesquisa;
-    use App\Classes\ParcelaPesquisa;
-    use App\Classes\Auth;
+    use App\Classes\Conexao\Conexao;
+    use App\Classes\Gasto\GastoPesquisa;
+    use App\Classes\Auth\Auth;
     use Util\PHP\FuncoesUteis;
 
     Auth::requireLogin();

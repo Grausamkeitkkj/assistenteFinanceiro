@@ -2,7 +2,7 @@
 namespace App\Classes;
 
 use PDO;
-use App\Classes\Usuario;
+use App\Classes\Usuario\Usuario;
 
 class UsuarioPesquisa {
     private PDO $pdo;

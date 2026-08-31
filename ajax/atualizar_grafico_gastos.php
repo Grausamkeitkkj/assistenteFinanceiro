@@ -1,10 +1,10 @@
 <?php
     require_once __DIR__ . '/../vendor/autoload.php';
 
-    use App\Classes\Conexao;
-    use App\Classes\ParcelaPesquisa;
+    use App\Classes\Conexso\Conexao;
+    use App\Classes\Parcela\ParcelaPesquisa;
     use Util\PHP\FuncoesUteis;
-    use App\Classes\Auth;
+    use App\Classes\Auth\Auth;
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
     $parcelaPesquisa = new ParcelaPesquisa($pdo);
