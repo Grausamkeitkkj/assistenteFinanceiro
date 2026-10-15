@@ -8,10 +8,10 @@ class Conexao {
     private $pdo;
 
     public function __construct() {
-        $host = 'localhost';
-        $db   = 'assistente_financeiro';
+        $host = 'db'; // Alterado de 'localhost' para o nome do serviço no docker-compose
+        $db   = 'assistente_financeiro'; // Nome do banco que colocou no DBeaver
         $user = 'root';
-        $pass = '';
+        $pass = 'rootpassword'; // Senha correta definida no Docker
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
