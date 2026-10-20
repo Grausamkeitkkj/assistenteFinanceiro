@@ -12,21 +12,24 @@
         </header>
         <main>
             <div class="content-centralize">
-                <div class="content-register-user">
-                    <h2 class="title-registration">Login</h2>
+                <div class="content-register content-style">
+                    <h2 class="title-registration">Criar Conta</h2>
                     <form class="form-registration" method="POST" action="salvar_usuario.php">
                         <div class="form-group">
-                            <label class="label-login">Email:</label>
-                            <input class="input-login" name="email" type="text" required placeholder="Digite seu e-mail">
-                            <label class="label-login">Nome:</label>
-                            <input class="input-login" name="nome" type="text" required placeholder="Digite seu nome de usuário">
-                            <label class="label-login">Senha:</label>
-                            <input class="input-login" name="senha" type="password" required placeholder="Digite sua senha">
-                            <label class="label-login">Repita a Senha:</label>
-                            <input class="input-login" name="senhaConfirmacao" type="password" required placeholder="Digite novamente sua senha">
+                            <label class="label-login">Email</label>
+                            <input class="input input-login" name="email" type="text" required placeholder="Digite seu e-mail">
+                            <label class="label-login">Nome</label>
+                            <input class="input input-login" name="nome" type="text" required placeholder="Digite seu nome de usuário">
+                            <label class="label-login">Senha</label>
+                            <input class="input input-login" name="senha" type="password" required placeholder="Digite sua senha">
+                            <label class="label-login">Repita a Senha</label>
+                            <input class="input input-login" name="senhaConfirmacao" type="password" required placeholder="Digite novamente sua senha">
                             <div class="button-container-login">
-                                <button class="submit-button-login" type="submit">Login</button>
+                                <button class="submit-button" type="submit">Cadastro</button>
                             </div>
+                            <p class="login-link">
+                                <a href="index.php">Já tem uma conta? Faça login aqui</a>
+                            </p>
                         </div>
                     </form>
                 </div>
