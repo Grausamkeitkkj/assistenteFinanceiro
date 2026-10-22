@@ -1,17 +1,17 @@
 <?php
-namespace App\Classes;
+namespace App\Classes\Conexao;
 
 use PDO;
 use PDOException;
 
 class Conexao {
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct() {
-        $host = 'db'; // Alterado de 'localhost' para o nome do serviÃ§o no docker-compose
-        $db   = 'assistente_financeiro'; // Nome do banco que colocou no DBeaver
-        $user = 'root';
-        $pass = 'rootpassword'; // Senha correta definida no Docker
+        $host    = 'db'; // nome do serviço no docker-compose
+        $db      = 'assistente_financeiro';
+        $user    = 'root';
+        $pass    = 'rootpassword';
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -24,7 +24,7 @@ class Conexao {
         try {
             $this->pdo = new PDO($dsn, $user, $pass, $options);
         } catch (PDOException $e) {
-            die('ConexÃ£o falhou: ' . $e->getMessage());
+            die('Conexão falhou: ' . $e->getMessage());
         }
     }
 
