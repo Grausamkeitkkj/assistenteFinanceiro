@@ -1,5 +1,5 @@
 <?php
-namespace App\Classes;
+namespace App\Classes\Auth;
 
 class Auth {
     public static function login($usuario){
