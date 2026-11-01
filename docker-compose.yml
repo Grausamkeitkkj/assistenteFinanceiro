@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/var/www/html
     ports:
-      - "8080:80"
+      - "8000:80" # Aplicação PHP acessível em http://localhost:8000
     networks:
       - app-network
 
@@ -19,11 +19,23 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: meu_projeto_db
+      MYSQL_DATABASE: assistenteFinanceiro
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: php_myadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8080:80" # phpMyAdmin acessível em http://localhost:8080
     networks:
       - app-network
 

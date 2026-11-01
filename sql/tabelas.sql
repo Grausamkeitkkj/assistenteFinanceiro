@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS usuario(
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    nome VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS categoria_gasto (
     id_categoria_gasto INT PRIMARY KEY AUTO_INCREMENT,
     nome_categoria_gasto VARCHAR(100) NOT NULL UNIQUE
@@ -21,7 +28,7 @@ CREATE TABLE IF NOT EXISTS gasto (
 
     FOREIGN KEY (categoria_id) REFERENCES categoria_gasto(id_categoria_gasto),
     FOREIGN KEY (forma_pagamento_id) REFERENCES forma_pagamento(id_forma_pagamento),
-    FOREIGN KEY (id_usuario_gasto) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (usuario_gasto_id) REFERENCES usuario(id_usuario)
 );
 
 CREATE TABLE IF NOT EXISTS parcela (
@@ -31,17 +38,10 @@ CREATE TABLE IF NOT EXISTS parcela (
     valor DECIMAL(10,2) NOT NULL,
     vencimento DATE NOT NULL,
     data_pagamento DATE DEFAULT NULL,
-    usuario_parcela_id INT NOT NULL
+    usuario_parcela_id INT NOT NULL,
     
     FOREIGN KEY (gasto_id) REFERENCES gasto(id_gasto),
     FOREIGN KEY (usuario_parcela_id) REFERENCES usuario(id_usuario)
-);
-
-CREATE TABLE IF NOT EXISTS usuario(
-    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(255) NOT NULL,
-    nome VARCHAR(255) NOT NULL,
-    senha VARCHAR(255) NOT NULL
 );
 
 INSERT IGNORE INTO categoria_gasto (nome_categoria_gasto) VALUES
