@@ -1,5 +1,5 @@
 <?php
-namespace App\Classes;
+namespace App\Classes\FormaPagamento;
 
 use PDO;
 
