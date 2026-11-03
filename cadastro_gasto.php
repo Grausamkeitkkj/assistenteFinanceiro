@@ -2,16 +2,16 @@
     require_once __DIR__ . '/vendor/autoload.php';
 
     use App\Classes\Conexao\Conexao;
-    use App\Classes\FormaPagamento\FormaPagamentoPesquisa;
-    use App\Classes\CategoriaGasto\CategoriaGastoPesquisa;
+    use App\Classes\FormaPagamento\FormaPagamento;
+    use App\Classes\CategoriaGasto\CategoriaGasto;
     use App\Classes\Auth\Auth;
     Auth::requireLogin();
 
     $conexao = new Conexao();
     $pdo = $conexao->getPdo();
 
-    $formaPagamentoArray = FormaPagamentoPesquisa::getFormaPagamento($pdo); 
-    $categoriaGastoArray = CategoriaGastoPesquisa::getCategoriaGasto($pdo);
+    $formaPagamentoArray = FormaPagamento::getFormaPagamento($pdo);
+    $categoriaGastoArray = CategoriaGasto::getCategoriaGasto($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -28,56 +28,56 @@
         <header class="header">
             <?php include_once("menu.php") ?>
         </header>
-            <main>
-                <div class="content-style content-cadastro-gasto-novo">
-                    <h2 class="title-registration">Cadastro de gasto/despesa/investimento</h2>
-                    <form class="form-registration" method="POST">
-                        <div class="grid">
-                            <div class="form-group">
-                                <label class="label-registration" for="produto">Produto:</label>
-                                <input class="input-registration" id="produto" name="produto" type="text" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="label-registration" for="categoria_id">Categoria:</label>
-                                <select class="input-registration" id="categoria_id" name="categoria_id" required>
-                                    <option value="">Selecione uma opção</option>
-                                    <?php
-                                        foreach($categoriaGastoArray as $categoriaGasto){
-                                            echo "<option value='".$categoriaGasto['id_categoria_gasto']."'>".htmlspecialchars($categoriaGasto['nome_categoria_gasto'])."</option>";
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="label-registration" for="valor">Valor:</label>
-                                <input class="input-registration" id="valor" name="valor" type="text" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="label-registration" for="forma_pagamento_id">Método de pagamento:</label>
-                                <select class="input-registration" id="forma_pagamento_id" name="forma_pagamento_id" required>
-                                    <option value="">Selecione uma opção</option>
-                                    <?php
-                                        foreach ($formaPagamentoArray as $formaPagamento) {
-                                            echo "<option value='".$formaPagamento['id_forma_pagamento']."'>".htmlspecialchars($formaPagamento['nome_forma_pagamento'])."</option>";
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="label-registration" for="total_parcelas">Total de parcelas:</label>
-                                <input class="input-registration" id="total_parcelas" name="total_parcelas" type="number" min="1" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="label-registration" for="data_pagamento">Data do primeiro pagamento:</label>
-                                <input class="input-registration" id="data_pagamento" name="data_pagamento" type="date">
-                            </div>
+        <main>
+            <div class="content-cadastro-gasto">
+                <h2 class="title-registration">Cadastro de gasto/despesa/investimento</h2>
+                <form class="form-registration" method="POST">
+                    <div class="grid">
+                        <div class="form-group">
+                            <label class="label-registration" for="produto">Produto:</label>
+                            <input class="input-registration" id="produto" name="produto" type="text" required>
                         </div>
-                        <div class="button-container">
-                            <button class="submit-button" type="submit">Salvar</button>
+                        <div class="form-group">
+                            <label class="label-registration" for="categoria_id">Categoria:</label>
+                            <select class="input-registration" id="categoria_id" name="categoria_id" required>
+                                <option value="">Selecione uma opção</option>
+                                <?php
+                                    foreach($categoriaGastoArray as $categoriaGasto){
+                                        echo "<option value='".$categoriaGasto->getIdCategoriaGasto()."'>".htmlspecialchars($categoriaGasto->getNomeCategoriaGasto())."</option>";
+                                    }
+                                ?>
+                            </select>
                         </div>
-                    </form>
-                </div>
-            </main>
+                        <div class="form-group">
+                            <label class="label-registration" for="valor">Valor:</label>
+                            <input class="input-registration" id="valor" name="valor" type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registration" for="forma_pagamento_id">Método de pagamento:</label>
+                            <select class="input-registration" id="forma_pagamento_id" name="forma_pagamento_id" required>
+                                <option value="">Selecione uma opção</option>
+                                <?php
+                                    foreach ($formaPagamentoArray as $formaPagamento) {
+                                        echo "<option value='".$formaPagamento->getIdFormaPagamento()."'>".htmlspecialchars($formaPagamento->getNomeFormaPagamento())."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registration" for="total_parcelas">Total de parcelas:</label>
+                            <input class="input-registration" id="total_parcelas" name="total_parcelas" type="number" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-registration" for="data_pagamento">Data do primeiro pagamento:</label>
+                            <input class="input-registration" id="data_pagamento" name="data_pagamento" type="date">
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button class="submit-button" type="submit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </main>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="Util/JS/ajaxRequest.js"></script>

@@ -1,5 +1,5 @@
 <?php
-namespace App\Classes\Usuario;
+namespace App\Classes;
 
 use PDO;
 use App\Classes\Usuario\Usuario;
