@@ -1,5 +1,5 @@
 <?php
-namespace App\Classes\FormaPagamento;
+namespace App\Classes;
 
 class FormaPagamento {
     private $id_forma_pagamento;

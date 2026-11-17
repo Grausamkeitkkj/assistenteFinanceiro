@@ -3,6 +3,12 @@ body {
     margin: 0;
     border: 0;
     background: #f7f7f7;
+    display: flex;
+    /* Define o container como flexbox, habilitando layout flexível */
+    flex-direction: column;
+    /* Organiza os itens filhos em coluna (de cima para baixo) */
+    align-items: center;
+    /* Alinha os itens filhos horizontalmente ao centro do container */
     background: linear-gradient(135deg, #e6e1ff 0%, #fbfaff 100%);
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -28,7 +34,7 @@ table {
 }
 
 .menu {
-    margin-right: 15px;
+    margin-right: 0px;
     padding: 10px 0;
     list-style: none;
     position: fixed;
@@ -132,14 +138,7 @@ table {
 
 .form-registration {
     width: 100%;
-    margin: 20px auto 0 auto;
-    box-sizing: border-box;
-}
-
-.content-cadastro-gasto-novo {
-    padding: 40px;
-    width: 50vw;
-    min-width: 450px;
+    margin: 0 auto;
     box-sizing: border-box;
 }
 
@@ -379,9 +378,11 @@ a.forgot-password:hover {
 
 .content-centralize {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* Alinha para o topo inicialmente */
+    justify-content: center;
     min-height: 100vh;
+    /* Adiciona um padding maior em cima do que embaixo para empurrar levemente para cima */
+    padding-top: 15vh; 
     box-sizing: border-box;
 }
 
@@ -470,13 +471,10 @@ a.forgot-password:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.content-parcelas-relatorio,
-.content-total-mes {
-    width: 80vw; /* Ou defina um valor fixo em pixels como 900px, dependendo da sua preferência */
-    max-width: 1200px;
-    padding: 40px;
-    margin: 10px auto; /* O 'auto' nas laterais ajuda a centralizar perfeitamente */
-    box-sizing: border-box;
+.margin-relatorio {
+    /* ajustar para a largura do menu (12vw) para alinhar o conteúdo fora do menu */
+    margin-left: 12vw;
+
 }
 
 .pointer {

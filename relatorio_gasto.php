@@ -38,59 +38,57 @@
             <?php include_once("menu.php") ?>
         </header>
         <main>
-            <div class="content-centralize">
-                <div class="content-style content-parcelas-relatorio">
-                    <input class="input-registration" id="data_vencimento_inicio_tabela" name="data_vencimento_inicio_tabela" type="month">
-                    <input class="input-registration" id="data_vencimento_fim_tabela" name="data_vencimento_fim_tabela" type="month">
-                    <button id="table-button" class="submit-button-table" type="submit">Pesquisar</button>
-                    <table class="table tabela-gasto">
-                        <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Categoria</th>
-                                <th>Valor</th>
-                                <th>Forma de Pagamento</th>
-                                <th>Parcelas pagas/Total parcelas</th>
-                                <th>Data Pagamento</th>
-                                <th>Parcelas</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                foreach ($gastoArray as $index => $gasto) {
-                                    $idGasto = $gasto->getIdGasto();
-                                    $contagemParcelasPagas = $gasto->getContagemParcelasPagas();
-                                    $dataPagamento = $gasto->getDataPagamento();
-                                    $produto = htmlspecialchars($gasto->getProduto());
-                                    $categoria = htmlspecialchars($gasto->getNomeCategoria());
-                                    $valorFormatado = FuncoesUteis::formatarValorParaExibir($gasto->getValor());
-                                    $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
-                                    $parcelas = htmlspecialchars($contagemParcelasPagas.'/' . $gasto->getTotalParcelas());
-                                    $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
+            <div class="content margin-relatorio">
+                <input class="input-registration" id="data_vencimento_inicio_tabela" name="data_vencimento_inicio_tabela" type="month">
+                <input class="input-registration" id="data_vencimento_fim_tabela" name="data_vencimento_fim_tabela" type="month">
+                <button id="table-button" class="submit-button-table" type="submit">Pesquisar</button>
+                <table class="table tabela-gasto">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Valor</th>
+                            <th>Forma de Pagamento</th>
+                            <th>Parcelas pagas/Total parcelas</th>
+                            <th>Data Pagamento</th>
+                            <th>Parcelas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            foreach ($gastoArray as $index => $gasto) {
+                                $idGasto = $gasto->getIdGasto();
+                                $contagemParcelasPagas = $gasto->getContagemParcelasPagas();
+                                $dataPagamento = $gasto->getDataPagamento();
+                                $produto = htmlspecialchars($gasto->getProduto());
+                                $categoria = htmlspecialchars($gasto->getNomeCategoria());
+                                $valorFormatado = FuncoesUteis::formatarValorParaExibir($gasto->getValor());
+                                $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
+                                $parcelas = htmlspecialchars($contagemParcelasPagas.'/' . $gasto->getTotalParcelas());
+                                $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
 
-                                    // Linha principal
-                                    echo '<tr>
-                                            <td>'.$produto.'</td>
-                                            <td>'.$categoria.'</td>
-                                            <td>'.$valorFormatado.'</td>
-                                            <td>'.$formaPagamento.'</td>
-                                            <td>'.$parcelas.'</td>
-                                            <td>'.$dataPagamentoFormatado.'</td>
-                                            <td>
-                                                <button class="parcela-btn pointer" data-id-gasto="'.$idGasto.'">+</button>
-                                            </td>
-                                          </tr>';
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="content-style content-total-mes">
-                <input class="input-registration" id="data_vencimento_inicio_grafico" name="data_vencimento_inicio_grafico" type="month">
-                <input class="input-registration" id="data_vencimento_fim_grafico" name="data_vencimento_fim_grafico" type="month">
-                <button id="graphic-button" class="submit-button-table" type="submit">Pesquisar</button>
-                    <canvas id="grafico1"></canvas>
-                </div>
+                                // Linha principal
+                                echo '<tr>
+                                        <td>'.$produto.'</td>
+                                        <td>'.$categoria.'</td>
+                                        <td>'.$valorFormatado.'</td>
+                                        <td>'.$formaPagamento.'</td>
+                                        <td>'.$parcelas.'</td>
+                                        <td>'.$dataPagamentoFormatado.'</td>
+                                        <td>
+                                            <button class="parcela-btn pointer" data-id-gasto="'.$idGasto.'">+</button>
+                                        </td>
+                                      </tr>';
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content margin-relatorio">
+            <input class="input-registration" id="data_vencimento_inicio_grafico" name="data_vencimento_inicio_grafico" type="month">
+            <input class="input-registration" id="data_vencimento_fim_grafico" name="data_vencimento_fim_grafico" type="month">
+            <button id="graphic-button" class="submit-button-table" type="submit">Pesquisar</button>
+                <canvas id="grafico1"></canvas>
             </div>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
