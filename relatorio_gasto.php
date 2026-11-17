@@ -55,32 +55,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            foreach ($gastoArray as $index => $gasto) {
-                                $idGasto = $gasto->getIdGasto();
-                                $contagemParcelasPagas = $gasto->getContagemParcelasPagas();
-                                $dataPagamento = $gasto->getDataPagamento();
-                                $produto = htmlspecialchars($gasto->getProduto());
-                                $categoria = htmlspecialchars($gasto->getNomeCategoria());
-                                $valorFormatado = FuncoesUteis::formatarValorParaExibir($gasto->getValor());
-                                $formaPagamento = htmlspecialchars($gasto->getNomeFormaPagamento());
-                                $parcelas = htmlspecialchars($contagemParcelasPagas.'/' . $gasto->getTotalParcelas());
-                                $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
-
-                                // Linha principal
-                                echo '<tr>
-                                        <td>'.$produto.'</td>
-                                        <td>'.$categoria.'</td>
-                                        <td>'.$valorFormatado.'</td>
-                                        <td>'.$formaPagamento.'</td>
-                                        <td>'.$parcelas.'</td>
-                                        <td>'.$dataPagamentoFormatado.'</td>
-                                        <td>
-                                            <button class="parcela-btn pointer" data-id-gasto="'.$idGasto.'">+</button>
-                                        </td>
-                                      </tr>';
-                            }
-                        ?>
+                        <tbody>
+                            <?php
+                                foreach ($gastoArray as $index => $gasto) {
+                                    $dataPagamento = $gasto['data_pagamento'] ?? '';
+                                    $dataPagamentoFormatado = !empty($dataPagamento) ? FuncoesUteis::formatarDataParaExibir($dataPagamento) : 'Sem data';
+                        
+                                    echo '<tr>
+                                            <td>'.htmlspecialchars($gasto['produto'] ?? '').'</td>
+                                            <td>'.htmlspecialchars($gasto['nome_categoria_gasto'] ?? '').'</td>
+                                            <td>'.FuncoesUteis::formatarValorParaExibir($gasto['valor'] ?? 0).'</td>
+                                            <td>'.htmlspecialchars($gasto['nome_forma_pagamento'] ?? '').'</td>
+                                            <td>'.htmlspecialchars(($gasto['contagem_parcelas_pagas'] ?? 0) . '/' . ($gasto['total_parcelas'] ?? 0)).'</td>
+                                            <td>'.$dataPagamentoFormatado.'</td>
+                                            <td>
+                                                <button class="parcela-btn pointer" data-id-gasto="'.$gasto['id_gasto'].'">+</button>
+                                            </td>
+                                          </tr>';
+                                }
+                            ?>
+                        </tbody>
                     </tbody>
                 </table>
             </div>

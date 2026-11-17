@@ -11,7 +11,7 @@ class GastoPesquisa {
         $this->pdo = $pdo;
     }
 
-    public function getGasto(int $idUsuario) {
+    public function getGasto(int $idUsuario): array {
         $sql = "SELECT 
                     a.*, 
                     b.nome_categoria_gasto, 
@@ -21,30 +21,14 @@ class GastoPesquisa {
                 JOIN categoria_gasto b ON a.categoria_id = b.id_categoria_gasto
                 JOIN forma_pagamento c ON a.forma_pagamento_id = c.id_forma_pagamento
                 JOIN parcela d ON a.id_gasto = d.gasto_id
-                WHERE a.id_usuario_gasto = :id_usuario_gasto
+                WHERE a.usuario_gasto_id = :usuario_gasto_id
                 GROUP BY a.id_gasto";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id_usuario_gasto', $idUsuario, PDO::PARAM_INT);
+        $stmt->bindValue(':usuario_gasto_id', $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
 
-        $gastos = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {// FETCH_ASSOC retorna a próxima linha
-            $gastos[] = new Gasto(
-                $row['id_gasto'],
-                $row['produto'],
-                $row['categoria_id'],
-                $row['nome_categoria_gasto'],
-                $row['valor'],
-                $row['forma_pagamento_id'],
-                $row['nome_forma_pagamento'],
-                $row['total_parcelas'],
-                $row['data_pagamento'],
-                $row['id_usuario_gasto'],
-                $row['contagem_parcelas_pagas']
-            );
-        }
-        return $gastos;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getGastoPorData(int $idUsuario, $vencimentoInicio, $vencimentoFim) {
